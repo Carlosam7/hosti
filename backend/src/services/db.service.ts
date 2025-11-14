@@ -7,7 +7,6 @@ export class DBService {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(res);
     return res.data;
   }
 }

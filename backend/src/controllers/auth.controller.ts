@@ -65,6 +65,8 @@ export class AuthController {
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
       });
+
+      res.status(200).json({ message: "Tokens refreshed successfully" });
     } catch (err) {
       handleAxiosError(err, res);
     }

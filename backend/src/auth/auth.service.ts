@@ -1,4 +1,4 @@
-import { authClient } from "../config/axios.config.js";
+import { authClient } from "../shared/config/axios.config.js";
 
 export class AuthService {
   async login(email: string, password: string) {

@@ -1,8 +1,8 @@
 import express from "express";
 import routes from "./routes/index.routes.js";
 import cookieParser from "cookie-parser";
-import { config } from "./config/config.js";
-import { errorMiddleware } from "./middlewares/error.middleware.js";
+import { config } from "./shared/config/config.js";
+import { errorMiddleware } from "./shared/middlewares/error.middleware.js";
 
 const app = express();
 const PORT = config.port;

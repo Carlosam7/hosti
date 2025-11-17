@@ -9,8 +9,9 @@ export function errorMiddleware(
 ) {
   if (err instanceof HttpException) {
     return res.status(err.status).json({
-      error: err.name,
+      error: err.error,
       message: err.message,
+      details: err?.details,
     });
   }
 

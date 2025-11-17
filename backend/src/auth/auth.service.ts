@@ -1,5 +1,4 @@
 import { authClient } from "../shared/config/axios.config.js";
-
 export class AuthService {
   async login(email: string, password: string) {
     const { data } = await authClient.post("/login", {

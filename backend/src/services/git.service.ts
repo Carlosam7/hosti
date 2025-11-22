@@ -6,12 +6,18 @@ import path from "path";
 
 export class GitService {
   async cloneRepository(repoUrl: string): Promise<string> {
-    const dir = path.join(config.deploymentsPath, randomUUID());
+    const dir = path.join(config.tmpRepoPath, randomUUID());
     await exec(`git clone ${repoUrl} ${dir}`);
 
     if (!fs.existsSync(dir)) {
       throw new Error("Failed to clone repository");
     }
     return dir;
+  }
+
+  async cleanupRepository(repoPath: string): Promise<void> {
+    if (fs.existsSync(repoPath)) {
+      fs.rmSync(repoPath, { recursive: true, force: true });
+    }
   }
 }

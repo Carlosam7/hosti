@@ -23,6 +23,17 @@ export class DBService {
     return res.data;
   }
 
+  async getUser(accessToken: string, UID: string) {
+    const res = await dbClient.get("/read", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      params: {
+        tableName: "_user",
+        UID,
+      },
+    });
+    return res.data;
+  }
+
   async uploadDeploymentData(
     accessToken: string,
     user_id: string,

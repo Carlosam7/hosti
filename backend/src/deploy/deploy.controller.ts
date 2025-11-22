@@ -5,10 +5,10 @@ export class DeployController {
   private readonly deployManager = new DeployManager();
 
   deploy = async (req: Request, res: Response, next: NextFunction) => {
-    const { repoUrl, subdomain } = req.body;
+    const dto = req.body;
 
     try {
-      await this.deployManager.handleDeploy(req, repoUrl, subdomain);
+      await this.deployManager.handleDeploy(req, dto);
       return res.status(201).json({ message: "Deploy handled" });
     } catch (err) {
       return next(err);

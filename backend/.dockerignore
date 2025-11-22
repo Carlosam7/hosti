@@ -1,0 +1,28 @@
+node_modules
+dist
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+.env
+.env.*
+npm-debug.log
+*.log
+coverage
+__tests__
+.vscode
+.idea
+*.md
+
+# Prettier
+.prettierignore
+.prettierrc
+.prettierrc.*
+.prettier.config.js
+
+# ESLint
+.eslintignore
+.eslintrc
+.eslintrc.*
+eslint.config.*
+

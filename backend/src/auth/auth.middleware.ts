@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { AuthManager } from "./auth.manager.service.js";
+import { AuthManager } from "./services/auth.manager.service.js";
 
 const authManager = new AuthManager();
 export const authMiddleware = async (

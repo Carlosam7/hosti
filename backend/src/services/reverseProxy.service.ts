@@ -8,18 +8,19 @@ export class ReverseProxyService {
     port: number
   ) {
     const config = `
-    server {
-      listen 80;
-      server_name ${subdomain}.${userName}.localhost.com;
+server {
+  listen 80;
+  server_name ${subdomain}.${userName}.localhost.com;
 
-      location / {
-        proxy_pass http://host.docker.internal:${port}
-      }
-    }`;
+  location / {
+    proxy_pass http://host.docker.internal:${port};
+  }
+}
+`;
 
-    const path = `/etc/nginx/conf.d/${subdomain}.conf`;
+    const confPath = `/app/nginx_conf/${subdomain}.conf`;
 
-    await fs.writeFile(path, config);
-    await exec("docker exec nginx-proxy nginx -s reload");
+    await fs.writeFile(confPath, config);
+    await exec("docker exec nginx nginx -s reload");
   }
 }

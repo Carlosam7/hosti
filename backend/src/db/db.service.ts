@@ -22,4 +22,59 @@ export class DBService {
     );
     return res.data;
   }
+
+  async getUser(accessToken: string, UID: string) {
+    const res = await dbClient.get("/read", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      params: {
+        tableName: "_user",
+        UID,
+      },
+    });
+    return res.data;
+  }
+
+  async uploadDeploymentData(
+    accessToken: string,
+    user_id: string,
+    repo_url: string,
+    subdomain: string,
+    description: string,
+    created_at: string
+  ) {
+    const res = await dbClient.post(
+      `/insert`,
+      {
+        tableName: "deployment",
+        records: [
+          {
+            user_id,
+            repo_url,
+            subdomain,
+            description,
+            created_at,
+          },
+        ],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return res.data;
+  }
+
+  async checkExistingRepository(accessToken: string, subdomain: string) {
+    const res = await dbClient.get("/read", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        tableName: "deployment",
+        subdomain,
+      },
+    });
+    return res.data.length > 0;
+  }
 }

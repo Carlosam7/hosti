@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { AuthManager } from "./auth.manager.service.js";
-import { TokenService } from "./token.service.js";
+import { AuthManager } from "./services/auth.manager.service.js";
+import { TokenService } from "./services/token.service.js";
 import { handleAxiosError } from "../shared/utils/handleAxiosError.js";
 
 export class AuthController {

@@ -2,18 +2,25 @@ export class HttpException extends Error {
   status: number;
   error: string;
   message: string;
+  details?: object | undefined;
 
-  constructor(status: number, error: string, message: string) {
+  constructor(
+    status: number,
+    error: string,
+    message: string,
+    details?: object
+  ) {
     super(message);
     this.status = status;
     this.error = error;
     this.message = message;
+    this.details = details;
   }
 }
 
 export class BadRequestException extends HttpException {
-  constructor(message: string = "Bad Request") {
-    super(400, "Bad Request", message);
+  constructor(message: string = "Bad Request", details?: object) {
+    super(400, "Bad Request", message, details);
   }
 }
 
@@ -26,6 +33,12 @@ export class UnauthorizedException extends HttpException {
 export class ForbiddenException extends HttpException {
   constructor(message: string = "Forbidden") {
     super(403, "Forbidden", message);
+  }
+}
+
+export class ConflictException extends HttpException {
+  constructor(message: string = "Conflict") {
+    super(409, "Conflict", message);
   }
 }
 

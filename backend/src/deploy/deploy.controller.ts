@@ -8,8 +8,8 @@ export class DeployController {
     const dto = req.body;
 
     try {
-      await this.deployManager.handleDeploy(req, dto);
-      return res.status(201).json({ message: "Deploy handled" });
+      const url = await this.deployManager.handleDeploy(req, dto);
+      return res.status(201).json({ message: "Deploy handled", url });
     } catch (err) {
       return next(err);
     }

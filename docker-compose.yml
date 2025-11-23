@@ -12,9 +12,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./backend/nginx/conf.d:/app/nginx_conf
     networks:
-      - hosti_net
+      - net
 
-  reverse-proxy:
+  nginx:
     image: nginx:latest
     container_name: nginx
     ports:
@@ -22,11 +22,11 @@ services:
     volumes:
       - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./backend/nginx/conf.d:/etc/nginx/conf.d
-    depends_on:
-      - backend
+    # depends_on:
+    #   - backend
     networks:
-      - hosti_net
+      - net
 
 networks:
-  hosti_net:
+  net:
     driver: bridge

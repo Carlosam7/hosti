@@ -1,6 +1,5 @@
 import { exec } from "../shared/utils/exec.util.js";
 
-// TODO: Try to reuse images
 export class DockerService {
   async buildImage(repoPath: string, imageName: string): Promise<void> {
     await exec(`docker build -t ${imageName} ${repoPath}`);
@@ -11,6 +10,8 @@ export class DockerService {
     containerName: string,
     port: number
   ): Promise<void> {
-    await exec(`docker run -d --name ${containerName} -p ${port} ${imageName}`);
+    await exec(
+      `docker run -d --name ${containerName} --network hosti_net -p ${port} ${imageName}`
+    );
   }
 }

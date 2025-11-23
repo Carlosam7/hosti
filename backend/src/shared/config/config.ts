@@ -8,4 +8,5 @@ export const config = {
       : "tmp/repositories",
   nginxConfPath:
     process.env.NODE_ENV === "production" ? "/app/nginx_conf" : "nginx/conf.d",
+  nginxPort: 80,
 };

@@ -6,4 +6,6 @@ export const config = {
     process.env.NODE_ENV === "production"
       ? "/app/tmp/repositories"
       : "tmp/repositories",
+  nginxConfPath:
+    process.env.NODE_ENV === "production" ? "/app/nginx_conf" : "nginx/conf.d",
 };

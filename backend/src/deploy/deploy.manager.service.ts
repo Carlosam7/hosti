@@ -16,9 +16,12 @@ export class DeployManager {
     const { accessToken } = req.cookies;
     const user = req.user;
 
+    const projectName =
+      dto.subdomain.toLowerCase() + "." + user!.name.toLowerCase();
+
     const existingRepo = await this.dbService.checkExistingRepository(
       accessToken,
-      dto.subdomain
+      projectName
     );
     if (existingRepo) {
       throw new ConflictException(
@@ -26,23 +29,20 @@ export class DeployManager {
       );
     }
     const repoPath = await this.gitService.cloneRepository(dto.repoUrl);
-    await this.dockerService.buildImage(repoPath, dto.subdomain);
-    await this.dockerService.runContainer(dto.subdomain, dto.subdomain, 80);
-
-    await this.reverseProxyService.createSubdomainConfig(
-      dto.subdomain,
-      user!.name,
-      80
-    );
+    await this.dockerService.buildImage(repoPath, projectName);
+    await this.dockerService.runContainer(projectName, projectName, 80);
+    await this.reverseProxyService.createSubdomainConfig(projectName, 80);
 
     await this.dbService.uploadDeploymentData(
       accessToken,
       user!.uid,
       dto.repoUrl,
-      dto.subdomain,
+      projectName,
       dto.description ?? "",
       new Date().toISOString()
     );
     await this.gitService.cleanupRepository(repoPath);
+
+    return `http://${projectName}.localhost`;
   }
 }

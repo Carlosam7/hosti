@@ -1,4 +1,4 @@
-import { DBService } from "../db/db.service.js";
+import { DBService } from "../services/db.service.js";
 import { DockerService } from "../services/docker.service.js";
 import { GitService } from "../services/git.service.js";
 import { ReverseProxyService } from "../services/reverseProxy.service.js";
@@ -16,8 +16,8 @@ export class DeployModule {
   private constructor() {
     const dockerService = new DockerService();
     const gitService = new GitService();
-    const dbService = new DBService();
     const reverseProxyService = new ReverseProxyService();
+    const dbService = DBService.getInstance();
 
     this.rollbackService = new DeployRollbackService(
       dbService,

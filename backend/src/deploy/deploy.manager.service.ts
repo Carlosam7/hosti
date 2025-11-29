@@ -1,6 +1,6 @@
 import { GitService } from "../services/git.service.js";
 import { DockerService } from "../services/docker.service.js";
-import { DBService } from "../db/db.service.js";
+import { DBService } from "../services/db.service.js";
 import {
   BadRequestException,
   ConflictException,

@@ -1,4 +1,4 @@
-import type { DBService } from "../db/db.service.js";
+import type { DBService } from "../services/db.service.js";
 import type { DockerService } from "../services/docker.service.js";
 import type { GitService } from "../services/git.service.js";
 import type { ReverseProxyService } from "../services/reverseProxy.service.js";

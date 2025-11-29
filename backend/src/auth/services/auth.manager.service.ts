@@ -5,9 +5,11 @@ import type { Request, Response } from "express";
 import { UnauthorizedException } from "../../shared/exceptions/http.exception.js";
 
 export class AuthManager {
-  private readonly authService = new AuthService();
-  private readonly dbService = new DBService();
-  private readonly tokenService = new TokenService();
+  constructor(
+    private readonly authService: AuthService,
+    private readonly dbService: DBService,
+    private readonly tokenService: TokenService
+  ) {}
 
   async login(email: string, password: string) {
     return await this.authService.login(email, password);

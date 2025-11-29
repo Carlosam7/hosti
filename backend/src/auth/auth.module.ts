@@ -1,4 +1,4 @@
-import { DBService } from "../db/db.service.js";
+import { DBService } from "../services/db.service.js";
 import { AuthController } from "./auth.controller.js";
 import { AuthManager } from "./services/auth.manager.service.js";
 import { AuthService } from "./services/auth.service.js";
@@ -8,12 +8,12 @@ export class AuthModule {
   private static instance: AuthModule;
 
   public readonly controller: AuthController;
-  private readonly authManager: AuthManager;
+  public readonly authManager: AuthManager;
 
-  constructor() {
+  private constructor() {
     const authService = new AuthService();
-    const dbService = new DBService();
     const tokenService = new TokenService();
+    const dbService = DBService.getInstance();
 
     this.authManager = new AuthManager(authService, dbService, tokenService);
 

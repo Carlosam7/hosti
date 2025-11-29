@@ -9,6 +9,7 @@ export class ReverseProxyService {
   // al final el reverse proxy va a mapear el subdominio al contenedor correspondiente
   // ejemplo: myapp.esteban.localhost -> myapp.esteban
   async createSubdomainConfig(conainerName: string, port: number) {
+    // TODO: notify-access
     const conf = `
 server {
   listen 80;
@@ -23,6 +24,12 @@ server {
     const confPath = `${config.nginxConfPath}/${conainerName}.conf`;
 
     await fs.writeFile(confPath, conf);
+    await exec("docker exec nginx nginx -s reload");
+  }
+
+  async removeSubdomainConfig(conainerName: string) {
+    const confPath = `${config.nginxConfPath}/${conainerName}.conf`;
+    await fs.unlink(confPath);
     await exec("docker exec nginx nginx -s reload");
   }
 }

@@ -5,13 +5,29 @@ export class DockerService {
     await exec(`docker build -t ${imageName} ${repoPath}`);
   }
 
+  async removeImage(imageName: string): Promise<void> {
+    await exec(`docker rmi ${imageName}`);
+  }
+
+  // TODO??: limite de CPU y memoria ajustable por template
   async runContainer(
     imageName: string,
     containerName: string,
     port: number
   ): Promise<void> {
     await exec(
-      `docker run -d --name ${containerName} --network hosti_net -p ${port} ${imageName}`
+      `docker run -d --cpus="0.5" --memory="250m" --name ${containerName} --network hosti_net -p ${port} ${imageName}`
     );
+  }
+
+  async removeContainer(containerName: string): Promise<void> {
+    await exec(`docker rm ${containerName} --force`);
+  }
+
+  async checkIfExists(containerName: string): Promise<boolean> {
+    const result = await exec(
+      `docker ps -a --filter "name=${containerName}" --format "{{.Names}}"`
+    );
+    return result.stdout.trim() === containerName;
   }
 }

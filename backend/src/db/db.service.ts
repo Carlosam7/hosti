@@ -65,6 +65,37 @@ export class DBService {
     return res.data;
   }
 
+  async deleteDeploymentData(accessToken: string, projectName: string) {
+    const res = await dbClient.delete("/delete", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      data: {
+        tableName: "deployment",
+        idColumn: "subdomain",
+        idValue: projectName,
+      },
+    });
+    return res.data;
+  }
+
+  async notifyAccess(accessToken: string, subdomain: string) {
+    await dbClient.put(
+      "/update",
+      {
+        tableName: "deployment",
+        idColumn: "subdomain",
+        idValue: subdomain,
+        updates: { lastAccess: Date.now() },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  }
+
   async checkExistingRepository(accessToken: string, subdomain: string) {
     const res = await dbClient.get("/read", {
       headers: {

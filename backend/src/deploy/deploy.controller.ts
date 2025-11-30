@@ -1,7 +1,7 @@
-import type { NextFunction, Request, Response } from "express";
 import { DeployManagerService } from "./deploy.manager.service.js";
-import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
 import { BadRequestException } from "../shared/exceptions/http.exception.js";
+import type { NextFunction, Request, Response } from "express";
+import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
 
 export class DeployController {
   constructor(private readonly deployManager: DeployManagerService) {}
@@ -47,15 +47,18 @@ export class DeployController {
   };
 
   notifyAccess = async (req: Request, res: Response, next: NextFunction) => {
-    const { accessToken } = req.cookies;
+    // a este endpoint solo se accede internamente desde nginx
+    // por lo que no es necesario autenticar al usuario
+    // solo se necesita el parametro project que es el subdominio
     const { project } = req.params;
-
     if (!project) throw new BadRequestException("Missing param 'project'");
 
+    console.log(`Notifying access for project: ${project}`);
     try {
-      await this.deployManager.notifyAccess(accessToken, project);
+      await this.deployManager.notifyAccess(project);
+      return res.sendStatus(204);
     } catch (err) {
-      next(err);
+      return next(err);
     }
   };
 }

@@ -1,19 +1,21 @@
 import { GitService } from "../services/git.service.js";
 import { DockerService } from "../services/docker.service.js";
-import { RobleDBService } from "../db/roble-db.service.js";
+import { RobleDBService } from "../db/roble.db.service.js";
 import {
   BadRequestException,
   ConflictException,
 } from "../shared/exceptions/http.exception.js";
-import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
 import { ReverseProxyService } from "../services/reverseProxy.service.js";
 import { config } from "../shared/config/config.js";
+import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
 import type { IUser } from "../auth/auth.types.js";
 import type { DeployRollbackService } from "./deploy-rollback.service.js";
+import type { SqliteDBService } from "../db/sqlite.db.service.js";
 
 export class DeployManagerService {
   constructor(
-    private readonly dbService: RobleDBService,
+    private readonly robleDBService: RobleDBService,
+    private readonly sqliteDBService: SqliteDBService,
     private readonly gitService: GitService,
     private readonly dockerService: DockerService,
     private readonly reverseProxyService: ReverseProxyService,
@@ -39,10 +41,8 @@ export class DeployManagerService {
     };
 
     try {
-      const existingRepo = await this.dbService.checkExistingRepository(
-        accessToken,
-        projectName
-      );
+      const existingRepo =
+        await this.sqliteDBService.findDeployment(projectName);
       if (existingRepo) {
         throw new ConflictException(
           "This subdomain is already associated with an existing deployment. Please choose a different subdomain."
@@ -67,7 +67,7 @@ export class DeployManagerService {
       );
       deploymentState.proxyConfigured = true;
 
-      await this.dbService.uploadDeploymentData(
+      await this.robleDBService.uploadDeploymentData(
         accessToken,
         user!.uid,
         dto.repoUrl,
@@ -76,6 +76,11 @@ export class DeployManagerService {
         new Date().toISOString()
       );
       deploymentState.dbRecordCreated = true;
+      await this.sqliteDBService.saveDeploymentData(user!.uid, {
+        repoUrl: dto.repoUrl,
+        subdomain: projectName,
+        description: dto?.description,
+      });
 
       await this.gitService.cleanupRepository(repoPath);
 
@@ -104,7 +109,7 @@ export class DeployManagerService {
     }
     await this.dockerService.removeContainer(containerName);
     await this.dockerService.removeImage(containerName);
-    await this.dbService.deleteDeploymentData(accessToken, projectName);
+    await this.robleDBService.deleteDeploymentData(accessToken, projectName);
     await this.reverseProxyService.removeSubdomainConfig(containerName);
   }
 
@@ -113,8 +118,7 @@ export class DeployManagerService {
   // TODO: agreagar metodo para congelar deploys (para no consumir recursos)
   // esto implica detener el contenedor y actualizar la base de datos
   // como sabemos cuanto tiempo ha estado sin usarse un contenedor? nadie sabe jaja
-
-  async notifyAccess(accessToken: string, subdomain: string) {
-    await this.dbService.notifyAccess(accessToken, subdomain);
+  async notifyAccess(projectName: string) {
+    await this.sqliteDBService.notifyAccess(projectName);
   }
 }

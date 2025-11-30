@@ -1,6 +1,7 @@
 import LandingPageDesktop from "../layouts/desktop/LandingPageDesktop"
 import useScreenWidth from "../hooks/useScreenWidth"
 
+
 function LandingPage () {
     const width = useScreenWidth()
 

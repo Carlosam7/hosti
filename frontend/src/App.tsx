@@ -8,7 +8,7 @@ function App() {
     <>
     <div className='w-full min-w-[350px]'>
       <Navbar/>
-      <NewProject/>
+      <Dashboard/>
       {/* <LandingPage/> */}
     </div>
     </>

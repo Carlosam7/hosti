@@ -40,7 +40,10 @@ function DashboardDesktop () {
                             <p className="text-muted-foreground">Gestiona todos tus proyectos creados desde templates</p>
                         </div>
                         {/* <Link href="/dashboard/new-project"> */}
-                            <button className="flex justify-center items-center gap-4 btn-outline">
+                            <button className="flex justify-center items-center gap-4 btn-outline" 
+                                onClick={ () => {
+                                    window.location.href = '/new-project'
+                                }}>
                                 <BiPlus className="h-4 w-4" />
                                 Nuevo Proyecto
                             </button>

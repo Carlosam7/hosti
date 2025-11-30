@@ -1,4 +1,4 @@
-import { DBService } from "../services/db.service.js";
+import { RobleDBService } from "../db/roble-db.service.js";
 import { DockerService } from "../services/docker.service.js";
 import { GitService } from "../services/git.service.js";
 import { ReverseProxyService } from "../services/reverseProxy.service.js";
@@ -17,7 +17,7 @@ export class DeployModule {
     const dockerService = new DockerService();
     const gitService = new GitService();
     const reverseProxyService = new ReverseProxyService();
-    const dbService = DBService.getInstance();
+    const dbService = RobleDBService.getInstance();
 
     this.rollbackService = new DeployRollbackService(
       dbService,

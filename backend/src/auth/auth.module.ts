@@ -1,4 +1,4 @@
-import { DBService } from "../services/db.service.js";
+import { RobleDBService } from "../db/roble-db.service.js";
 import { AuthController } from "./auth.controller.js";
 import { AuthManager } from "./services/auth.manager.service.js";
 import { AuthService } from "./services/auth.service.js";
@@ -13,7 +13,7 @@ export class AuthModule {
   private constructor() {
     const authService = new AuthService();
     const tokenService = new TokenService();
-    const dbService = DBService.getInstance();
+    const dbService = RobleDBService.getInstance();
 
     this.authManager = new AuthManager(authService, dbService, tokenService);
 

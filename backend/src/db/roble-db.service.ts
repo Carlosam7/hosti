@@ -1,7 +1,7 @@
 import { dbClient } from "../shared/config/axios.config.js";
 
-export class DBService {
-  private static instance: DBService;
+export class RobleDBService {
+  private static instance: RobleDBService;
   private constructor() {}
 
   async createUser(
@@ -112,10 +112,10 @@ export class DBService {
     return res.data.length > 0;
   }
 
-  static getInstance(): DBService {
-    if (!DBService.instance) {
-      DBService.instance = new DBService();
+  static getInstance(): RobleDBService {
+    if (!RobleDBService.instance) {
+      RobleDBService.instance = new RobleDBService();
     }
-    return DBService.instance;
+    return RobleDBService.instance;
   }
 }

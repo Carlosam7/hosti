@@ -1,5 +1,5 @@
 import { AuthService } from "./auth.service.js";
-import { DBService } from "../../services/db.service.js";
+import { RobleDBService } from "../../db/roble-db.service.js";
 import { TokenService } from "./token.service.js";
 import type { Request, Response } from "express";
 import { UnauthorizedException } from "../../shared/exceptions/http.exception.js";
@@ -7,7 +7,7 @@ import { UnauthorizedException } from "../../shared/exceptions/http.exception.js
 export class AuthManager {
   constructor(
     private readonly authService: AuthService,
-    private readonly dbService: DBService,
+    private readonly dbService: RobleDBService,
     private readonly tokenService: TokenService
   ) {}
 

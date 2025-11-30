@@ -1,11 +1,11 @@
-import type { DBService } from "../services/db.service.js";
+import type { RobleDBService } from "../db/roble-db.service.js";
 import type { DockerService } from "../services/docker.service.js";
 import type { GitService } from "../services/git.service.js";
 import type { ReverseProxyService } from "../services/reverseProxy.service.js";
 
 export class DeployRollbackService {
   constructor(
-    private readonly dbService: DBService,
+    private readonly dbService: RobleDBService,
     private readonly reverseProxyService: ReverseProxyService,
     private readonly dockerService: DockerService,
     private readonly gitService: GitService

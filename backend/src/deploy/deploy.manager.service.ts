@@ -1,6 +1,6 @@
 import { GitService } from "../services/git.service.js";
 import { DockerService } from "../services/docker.service.js";
-import { DBService } from "../services/db.service.js";
+import { RobleDBService } from "../db/roble-db.service.js";
 import {
   BadRequestException,
   ConflictException,
@@ -13,7 +13,7 @@ import type { DeployRollbackService } from "./deploy-rollback.service.js";
 
 export class DeployManagerService {
   constructor(
-    private readonly dbService: DBService,
+    private readonly dbService: RobleDBService,
     private readonly gitService: GitService,
     private readonly dockerService: DockerService,
     private readonly reverseProxyService: ReverseProxyService,

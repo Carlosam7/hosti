@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Deploy {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  subdomain   String
+  description String?
+  repoUrl     String
+  lastAccess  DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, subdomain])
+}

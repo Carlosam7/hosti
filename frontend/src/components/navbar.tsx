@@ -26,7 +26,7 @@ function Navbar () {
                     </section>
 
                     <section>
-                        <button className="cursor-pointer px-5 py-2 rounded-lg btn-primary text-white font-medium lg:rounded-xl">
+                        <button className="cursor-pointer px-5 py-2 btn-primary text-white font-medium ">
                             Login
                         </button>
                     </section>

@@ -5,7 +5,7 @@ import LandingPage from './pages/LandingPage'
 function App() {
   return (
     <>
-    <div className='w-full min-w-[350px]'>
+    <div className='flex justify-center w-full min-w-[350px]'>
       <Navbar/>
       <Dashboard/>
       {/* <LandingPage/> */}

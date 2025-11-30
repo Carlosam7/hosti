@@ -1,19 +1,18 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
+  url      = "file:../src/db/app.db"
 }
 
 model Deploy {
   id          Int      @id @default(autoincrement())
   userId      String
-  subdomain   String
-  description String?
+  subdomain   String   @unique
   repoUrl     String
+  description String?
   lastAccess  DateTime @default(now())
   createdAt   DateTime @default(now())
-
-  @@unique([userId, subdomain])
 }

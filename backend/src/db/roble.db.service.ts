@@ -82,36 +82,6 @@ export class RobleDBService {
     return res.data;
   }
 
-  async notifyAccess(accessToken: string, subdomain: string) {
-    await dbClient.put(
-      "/update",
-      {
-        tableName: "deployment",
-        idColumn: "subdomain",
-        idValue: subdomain,
-        updates: { lastAccess: Date.now() },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-  }
-
-  async checkExistingRepository(accessToken: string, subdomain: string) {
-    const res = await dbClient.get("/read", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        tableName: "deployment",
-        subdomain,
-      },
-    });
-    return res.data.length > 0;
-  }
-
   static getInstance(): RobleDBService {
     if (!RobleDBService.instance) {
       RobleDBService.instance = new RobleDBService();

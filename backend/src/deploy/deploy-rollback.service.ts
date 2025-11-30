@@ -1,4 +1,4 @@
-import type { RobleDBService } from "../db/roble-db.service.js";
+import type { RobleDBService } from "../db/roble.db.service.js";
 import type { DockerService } from "../services/docker.service.js";
 import type { GitService } from "../services/git.service.js";
 import type { ReverseProxyService } from "../services/reverseProxy.service.js";

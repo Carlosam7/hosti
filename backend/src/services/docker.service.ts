@@ -2,7 +2,7 @@ import { exec } from "../shared/utils/exec.util.js";
 
 export class DockerService {
   async buildImage(repoPath: string, imageName: string): Promise<void> {
-    await exec(`docker build -t ${imageName} ${repoPath}`);
+    await exec(`docker build --no-cache -t ${imageName} ${repoPath}`);
   }
 
   async removeImage(imageName: string): Promise<void> {

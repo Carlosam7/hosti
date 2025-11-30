@@ -14,7 +14,7 @@ export class TokenService {
     });
     res.cookie("refreshToken", refreshToken, {
       ...this.cookieOptions,
-      maxAge: 30 * 60 * 1000,
+      maxAge: 60 * 60 * 1000,
     });
   }
 

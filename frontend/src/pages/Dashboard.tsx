@@ -1,7 +1,8 @@
-import LandingPageDesktop from "../layouts/desktop/LandingPageDesktop"
 import useScreenWidth from "../hooks/useScreenWidth"
+import DashboardDesktop from "../layouts/desktop/DashboardDesktop"
 
-function LandingPage () {
+
+function Dashboard () {
     const width = useScreenWidth()
 
 
@@ -9,7 +10,7 @@ function LandingPage () {
     console.log(window.innerWidth)
     if (width > 1024) {
         return (
-            <LandingPageDesktop/>
+            <DashboardDesktop/>
         )
 
     } else {
@@ -21,4 +22,4 @@ function LandingPage () {
     
 }
 
-export default LandingPage
+export default Dashboard

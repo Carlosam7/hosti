@@ -1,9 +1,15 @@
+import Navbar from './components/navbar'
+import Dashboard from './pages/Dashboard'
 import LandingPage from './pages/LandingPage'
 
 function App() {
   return (
     <>
-      <LandingPage/>
+    <div className='w-full min-w-[350px]'>
+      <Navbar/>
+      <Dashboard/>
+      {/* <LandingPage/> */}
+    </div>
     </>
   )
 }

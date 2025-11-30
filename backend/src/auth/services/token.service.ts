@@ -4,7 +4,7 @@ export class TokenService {
   private readonly cookieOptions: CookieOptions = {
     httpOnly: true,
     secure: false, // process.env.NODE_ENV === "production"
-    sameSite: "strict",
+    sameSite: "lax",
   };
 
   setTokens(res: Response, accessToken: string, refreshToken: string) {

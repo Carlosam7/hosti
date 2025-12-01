@@ -109,12 +109,15 @@ export class DeployManagerService {
       );
     }
     const isRunning = await this.dockerService.checkIfRunning(containerName);
+    if (isRunning) {
+      await this.reverseProxyService.removeSubdomainConfig(containerName);
+      await this.dockerService.stopContainer(containerName);
+    }
     await this.dockerService.removeContainer(containerName);
     await this.dockerService.removeImage(containerName);
     await this.robleDBService.deleteDeploymentData(accessToken, containerName);
     await this.sqliteDBService.deleteDeploymentData(containerName);
-    if (isRunning)
-      await this.reverseProxyService.removeSubdomainConfig(containerName);
+    await this.reverseProxyService.reloadProxy();
   }
 
   async notifyAccess(projectName: string) {

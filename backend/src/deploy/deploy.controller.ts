@@ -49,7 +49,6 @@ export class DeployController {
   notifyAccess = async (req: Request, res: Response, next: NextFunction) => {
     // a este endpoint solo se accede internamente desde nginx
     // por lo que no es necesario autenticar al usuario
-    // solo se necesita el parametro project que es el subdominio
     const { project } = req.params;
     if (!project) throw new BadRequestException("Missing param 'project'");
 

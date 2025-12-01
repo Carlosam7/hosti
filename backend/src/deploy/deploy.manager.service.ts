@@ -122,7 +122,7 @@ export class DeployManagerService {
     await this.sqliteDBService.notifyAccess(projectName);
   }
 
-  async slpeep(projectName: string) {
+  async sleep(projectName: string) {
     await this.reverseProxyService.removeSubdomainConfig(projectName);
     await this.dockerService.stopContainer(projectName);
     await this.sqliteDBService.updateActiveStatus(projectName, false);

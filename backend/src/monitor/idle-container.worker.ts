@@ -40,7 +40,7 @@ export class IdleContainerWorker {
             diff / 1000
           } seconds. Stopping it.`
         );
-        await this.deployManager.slpeep(containerName);
+        await this.deployManager.sleep(containerName);
 
         console.log(`Host ${containerName} has been stopped due to idleness.`);
       }

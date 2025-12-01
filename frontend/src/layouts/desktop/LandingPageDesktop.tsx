@@ -16,7 +16,7 @@ function LandingPageDesktop () {
                         <BsLightningCharge/>
                         Management your templates
                     </div>
-                    <h1 className="md:mb-2 lg:mb-5">Deploy your repository with <span className="px-5 bg-linear-to-tr from-[#00ffaa] to-[#008781] rounded-xl hover:shadow-[0_0_70px_0px_#00ffaa] transition-all duration-700 text-gray-200">Hosti</span></h1>
+                    <h1 className="md:mb-2 lg:mb-5">Deploy your repository with <span className="px-5 bg-linear-to-tr from-[#00ffaa] to-[#008781] rounded-full hover:shadow-[0_0_70px_0px_#00ffaa] transition-all duration-700 text-gray-200">Hosti</span></h1>
                     <h1>and turn it into a functional web service</h1>
                     <p className="hidden md:flex text-[15px] md:text-xl lg:text-2xl font-normal lg:mt-4">
                         With Hosti, you can create and manage your web projects without complications:<br/> select a template, connect your GitHub repository, and let our platform take care of the rest.
@@ -26,10 +26,10 @@ function LandingPageDesktop () {
                         With Hosti, you can create and manage your web projects without complications.
                     </p>
                     <div className="flex items-center h-[70px] font-medium text-sm gap-2 mt-5 lg:text-lg lg:gap-5 lg:mt-10">
-                        <button className="text-white cursor-pointer h-[60px] w-[150px] hover:shadow-[0_0_30px_0px_#00ffaa] lg:rounded-xl transform hover:scale-105 transition-all duration-500 btn-primary">
+                        <button className="cursor-pointer h-[50px] w-[150px] hover:shadow-[0_0_30px_0px_#00ffaa] transform hover:scale-105 transition-all duration-500 btn-primary">
                             Get start
                         </button>
-                        <button className="cursor-pointer w-[100px] h-[60px] px-2 py-2 rounded-lg lg:w-[150px] lg:px-5 lg:py-3 border border-gray-400 hover:bg-gray-300 lg:rounded-xl">
+                        <button className="cursor-pointer w-[100px] h-[50px] lg:w-[150px] btn-secondary">
                             Contact us
                         </button>
                     </div>
@@ -37,14 +37,14 @@ function LandingPageDesktop () {
             </section>
 
             <section className={`flex flex-col justify-center items-center w-full py-28 gap-16 bg-[#f8f8f8]`}>
-                <div className="flex flex-col justify-center items-center gap-8">
+                <div className="container flex flex-col justify-center items-center gap-8">
                     <div className="flex justify-center items-center rounded-2xl w-[50px] h-[50px] bg-linear-to-tr from-[#00ffaa] to-[#008781]">
                         <LuSettings size={25} color="white"opacity={0.5}/>
                     </div>
                 <h2 className="text-4xl font-bold">¿How work?</h2>
                 </div>
                 
-                <div className="flex w-[70%] gap-5">
+                <div className="container flex w-[70%] gap-5">
                     <LandingPageCard icon={<RiNumber1 />} title="Selecciona un template" description="Elige entre nuestros templates base optimizados para diferentes tipos de proyectos."/>
                     <LandingPageCard icon={<RiNumber2 />} title="Selecciona un template" description="Elige entre nuestros templates base optimizados para diferentes tipos de proyectos."/>
                     <LandingPageCard icon={<RiNumber3 />} title="Selecciona un template" description="Elige entre nuestros templates base optimizados para diferentes tipos de proyectos."/>
@@ -58,14 +58,14 @@ function LandingPageDesktop () {
                     </div>
                 <h2 className="text-4xl font-bold">Available templates</h2>
                 </div>
-                <div className="flex w-[70%] gap-5">
+                <div className="container flex w-[70%] gap-5">
                     <LandingPageCard icon={<TiSocialGithub size={40} />} title="Selecciona un template" description="Elige entre nuestros templates base optimizados para diferentes tipos de proyectos."/>
                     <LandingPageCard icon={<TiSocialGithub size={40} />} title="Selecciona un template" description="Elige entre nuestros templates base optimizados para diferentes tipos de proyectos."/>
                     <LandingPageCard icon={<TiSocialGithub size={40} />} title="Selecciona un template" description="Elige entre nuestros templates base optimizados para diferentes tipos de proyectos."/>
                 </div>
             </section>
 
-            <section className={`flex flex-col justify-center items-center w-full py-28 gap-16`}>
+            <section className={`flex flex-col justify-center items-center w-full py-28 px-10 gap-16`}>
                 <div className="flex flex-col justify-center items-center gap-8">
                     <div className="flex justify-center items-center rounded-2xl w-[50px] h-[50px] bg-linear-to-tr from-[#00ffaa] to-[#008781]">
                         <LuSettings size={25} color="white"opacity={0.5}/>

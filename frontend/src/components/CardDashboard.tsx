@@ -2,7 +2,7 @@ function CardDashboard ({ titulo, value }: { titulo: string, value: any } ) {
     return (
         <>
             <div className="text-white">
-                <section className="flex justify-between items-center p-4 rounded-3xl bg-linear-to-tr from-[#21fff0] to-[#3ab8b0] w-full h-[155px]">
+                <section className="flex justify-between items-center p-4 rounded-3xl bg-linear-to-tr from-[#00ffaa] to-[#008781] w-full h-[155px]">
                     <div>
                         <h2 className="font-medium w-full py-5">
                             {titulo}

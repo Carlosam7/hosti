@@ -9,12 +9,12 @@
     @apply cursor-pointer rounded-full px-5 py-2 bg-linear-to-tr from-[#00ff88] to-[#008781] text-white font-medium;
   }
 
-  .btn-default {
-    @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+  .btn-secondary {
+    @apply cursor-pointer rounded-full px-5 py-2 bg-linear-to-tr from-gray-400 to-gray-200 text-white font-medium;
   }
 
   .btn-outline {
-    @apply cursor-pointer px-5 py-2 rounded-lg border-2 border-[#6ddbd7] hover:bg-[#2dd4cf] hover:shadow-[0_0_10px_0px_#008781aa] transition-all duration-700 text-black font-medium lg:rounded-xl;
+    @apply cursor-pointer px-5 py-2 rounded-lg border border-[#008781] hover:bg-[#2dd4cf] hover:text-white hover:shadow-[0_0_10px_0px_#008781aa] transition-all duration-700 text-black font-medium lg:rounded-xl;
   }
 
   .btn-home {

@@ -15,6 +15,13 @@ export function errorMiddleware(
     });
   }
 
+  if (err.name === "CorsError") {
+    return res.status(403).json({
+      error: "CORST policy violation",
+      message: err.message,
+    });
+  }
+
   console.error("UNHANDLED ERROR:", err);
   return res.status(500).json({
     error: "InternalServerError",

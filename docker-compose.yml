@@ -28,6 +28,16 @@ services:
     networks:
       - net
 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    networks:
+      - net
+
 networks:
   net:
     driver: bridge

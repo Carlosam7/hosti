@@ -1,6 +1,6 @@
 // src/services/auth.ts
-import { apiRequest, setTokens } from "./http"
-const BASE_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:3000"
+import React from "react"
+import { apiRequest } from "./http"
 
 export type User = {
   id: string
@@ -28,14 +28,10 @@ type SignupResponse = {
 let currentUser: User | null = null
 
 export async function login(email: string, password: string): Promise<User> {
+  // Placeholder to avoid TS error
   const data = await apiRequest<LoginResponse>("/auth/login", {
     method: "POST",
     body: JSON.stringify({ email, password }),
-  })
-
-  setTokens({
-    accessToken: data.accessToken,
-    refreshToken: data.refreshToken ?? null,
   })
 
   const username = data.user.email.split("@")[0]
@@ -58,23 +54,29 @@ export async function signup(name: string, email: string, password: string): Pro
 
   // Opcion 1: volver al login
   // Opcion 2 (aquí): auto login
-  return login(data.email, password)
+  return loginTwo(data.email, password)
 }
-
-export async function refresh(): Promise<void> {
-  const data = await apiRequest<{ accessToken?: string }>("/auth/refresh-token", { method: "POST" })
-  if (data?.accessToken) {
-    setTokens({ accessToken: data.accessToken })
-  }
+export async function loginTwo(email: string, password: string ): Promise<User> {
+  console.log("Login two called with:", email, password);
+  const data = await fetch("http://localhost:3000/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ email, password }),
+  })
+  const result = await data.json()
+  console.log("Login two OK:", result)
+  return result
 }
 
 export async function logout(): Promise<void> {
   try {
-    await apiRequest<void>("/auth/logout", { method: "POST" }, true)
+    await apiRequest<void>("/auth/logout", { method: "POST" })
   } catch {
     // si falla igual limpiamos
   } finally {
-    setTokens({ accessToken: null })
     currentUser = null
   }
 }
@@ -88,7 +90,3 @@ export function isAuthenticated(): boolean {
   return !!currentUser || !!localStorage.getItem('accessToken')
 }
 
-export function loginWithRoble(): void {
-  // Redirige al flujo OAuth del backend
-  window.location.href = `${BASE_URL}/auth/roble`
-}

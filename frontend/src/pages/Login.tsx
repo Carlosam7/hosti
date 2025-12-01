@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { login } from "../services/auth";
+import { loginTwo } from "../services/auth";
 // Icons
 import { FaGithub } from "react-icons/fa";
 import { TbDatabaseImport } from "react-icons/tb";
+import { MdMoreTime } from "react-icons/md";
+import { MdOutlineEmail } from "react-icons/md";
+import { MdKey } from "react-icons/md";
+import { FaEye } from "react-icons/fa6";
+import { FaEyeSlash } from "react-icons/fa6";
+import { ImRocket } from "react-icons/im";
+// import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
@@ -10,6 +17,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -17,9 +25,9 @@ export default function Login() {
     setError(null);
 
     try {
-      const res = await login(email, password);
-      console.log("Login OK:", res);
-
+        const res = await loginTwo(email, password);
+        console.log("Login OK:", res);
+        // useNavigate("/dashboard")
       // REDIRECT AL DASHBOARD
       window.location.href = "/dashboard";
     } catch (err: any) {
@@ -39,13 +47,14 @@ export default function Login() {
           <div className="absolute w-48 h-48 bg-white/10 rounded-full -bottom-16 -left-16 animate-float" aria-hidden="true" />
 
           <div className="text-6xl mb-4" aria-hidden="true"></div>
+          <ImRocket className="text-7xl mb-4" aria-hidden="true"/>
           <h2 className="text-3xl font-bold mb-4 text-center">Hosting Platform</h2>
           <p className="text-center opacity-90">Despliega tus proyectos web en segundos con contenedores Docker</p>
 
           <ul className="mt-8 space-y-4" aria-label="Características">
-            <Feature icon={<FaGithub />} text="Despliegue instantáneo desde GitHub" />
+            <Feature icon={<FaGithub className="invalid:border-pink-500"/>} text="Despliegue instantáneo desde GitHub" />
             <Feature icon={<TbDatabaseImport />} text="Integración segura con Roble" />
-            <Feature icon="📊" text="Monitoreo en tiempo real" />
+            <Feature icon={<MdMoreTime />} text="Monitoreo en tiempo real" />
           </ul>
         </aside>
 
@@ -66,7 +75,8 @@ export default function Login() {
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-teal-700 mb-1">Correo electrónico</label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2" aria-hidden="true">📧</span>
+                <MdOutlineEmail className="absolute left-4 top-1/2 -translate-y-1/2 text-black" aria-hidden="true" />
+                {/* <span  aria-hidden="true">📧</span> */}
                 <input
                   id="email"
                   name="email"
@@ -84,11 +94,11 @@ export default function Login() {
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-teal-700 mb-1">Contraseña</label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2" aria-hidden="true">🔑</span>
+                <MdKey className="absolute left-4 top-1/2 -translate-y-1/2 text-black" aria-hidden="true" />
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
                   placeholder="••••••••"
@@ -96,6 +106,12 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 p-3 bg-white rounded-lg border-2 border-gray-200 focus:border-teal-400 focus:ring-4 focus:ring-teal-300/30 transition"
                 />
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-xl cursor-pointer select-none"
+                    >{showPassword ? <FaEyeSlash /> : <FaEye /> }
+                </button>
               </div>
             </div>
 
@@ -109,14 +125,18 @@ export default function Login() {
           </form>
 
           <div className="my-6 flex items-center" aria-hidden="true">
+            <div className="flex-1 h-[1px] bg-gray-200"></div>
+            <span className="px-3 text-sm">o continúa con</span>
+            <div className="flex-1 h-[1px] bg-gray-200"></div>
           </div>
 
           <button
             type="button"
-            aria-label="Terminos y condiciones de uso de Roble"
-            className="w-full p-3 rounded-lg font-semibold flex items-center justify-center gap-3 transition"
+            aria-label="Registrarse"
+            className="w-full p-3 bg-gray-400 hover:bg-gray-500 text-white rounded-lg font-semibold flex items-center justify-center gap-3 transition"
+
           >
-            Terminos y condiciones de uso de Roble
+            Registrarme
           </button>
         </section>
       </section>

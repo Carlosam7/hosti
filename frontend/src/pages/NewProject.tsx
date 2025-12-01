@@ -212,7 +212,7 @@ export default function NewProject() {
                       <p className="mt-3 text-xs text-gray-600 leading-relaxed">{t.description}</p>
 
                       <div className="mt-4">
-                        <button
+                        <a
                           type="button"
                           onClick={(e) => { e.stopPropagation(); window.open(t.repoTemplateUrl, "_blank") }}
                           className={[
@@ -230,7 +230,7 @@ export default function NewProject() {
                             <path d="M15 3h6v6" />
                             <path d="M10 14 21 3" />
                           </svg>
-                        </button>
+                        </a>
                       </div>
                     </button>
                   )

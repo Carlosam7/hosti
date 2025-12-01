@@ -12,6 +12,7 @@ function App() {
       {/* <Dashboard/> */}
       <Login/>
       {/* <LandingPage/> */}
+      {/* <NewProject/> */}
     </div>
     </>
   )

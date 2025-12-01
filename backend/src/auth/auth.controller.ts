@@ -4,8 +4,10 @@ import { TokenService } from "./services/token.service.js";
 import { handleAxiosError } from "../shared/utils/handleAxiosError.js";
 
 export class AuthController {
-  private readonly authManager = new AuthManager();
-  private readonly tokenService = new TokenService();
+  constructor(
+    private readonly authManager: AuthManager,
+    private readonly tokenService: TokenService
+  ) {}
 
   login = async (req: Request, res: Response) => {
     const { email, password } = req.body;

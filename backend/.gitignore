@@ -4,3 +4,4 @@ dist
 *.conf
 tmp/repositories/*
 REST*.http
+*.dev

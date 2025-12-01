@@ -16,3 +16,11 @@ export const config = {
       : "nginx/conf.d",
   nginxPort: 80,
 };
+
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
+  ? process.env.CORS_ALLOWED_ORIGINS.split(",")
+  : ["http://localhost:3000"];
+export const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+};

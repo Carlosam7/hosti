@@ -16,5 +16,10 @@ router.post(
 );
 router.delete("/:projectName", authMiddleware, deployController.deleteDeploy);
 router.get("/notify-access/:project", deployController.notifyAccess);
+router.get(
+  "/user/deployments",
+  authMiddleware,
+  deployController.getDeploymentsByUserId
+);
 
 export default router;

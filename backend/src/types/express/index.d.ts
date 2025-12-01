@@ -1,12 +1,9 @@
+import type { IUser } from "../../auth/auth.types.ts";
+
 declare global {
   namespace Express {
     interface Request {
-      user?: {
-        uid: string;
-        name: string;
-        email: string;
-        role: string;
-      };
+      user?: IUser;
     }
   }
 }

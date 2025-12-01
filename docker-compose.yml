@@ -10,7 +10,8 @@ services:
       - NODE_ENV=production
     volumes: 
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./backend/nginx/conf.d:/app/nginx_conf
+      - ./backend/nginx/conf.d:/app/nginx/conf.d
+      - ./backend/src/db/app.db:/app/src/db/app.db
     networks:
       - net
 
@@ -22,8 +23,8 @@ services:
     volumes:
       - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./backend/nginx/conf.d:/etc/nginx/conf.d
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
     networks:
       - net
 

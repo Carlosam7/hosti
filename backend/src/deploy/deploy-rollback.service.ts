@@ -29,9 +29,10 @@ export class DeployRollbackService {
       await this.reverseProxyService.removeSubdomainConfig(projectName);
     }
     if (state.containerRunning) {
-      await this.dockerService.removeContainer(projectName);
+      await this.dockerService.stopContainer(projectName);
     }
     if (state.imageBuilt) {
+      await this.dockerService.removeContainer(projectName);
       await this.dockerService.removeImage(projectName);
     }
     if (state.repoPath) {

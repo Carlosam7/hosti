@@ -23,6 +23,7 @@ export class DeployModule {
 
     this.rollbackService = new DeployRollbackService(
       robleDBService,
+      sqliteDBService,
       reverseProxyService,
       dockerService,
       gitService

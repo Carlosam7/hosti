@@ -17,13 +17,6 @@ server {
 
   location / {
     auth_request /notify-access;
-    auth_request_set $auth_status $upstream_status;
-
-    if ($auth_status = 412) {
-      return 412;
-    }
-
-    error_page 412 = @wake_up;
     proxy_pass http://${containerName}:${port};
   }
 
@@ -31,12 +24,6 @@ server {
     internal;
     rewrite ^/notify-access$ /deploy/notify-access/${containerName} break;
     proxy_pass http://${config.backendUrl};
-  }
-
-  location @wake_up {
-    add_header Refresh "1; url=$scheme://$host$request_uri";
-    add_header Content-Type text/html;
-    return 200 "<html><body><h1>welcome to Hosti!. Your project is waking up...</h1></body></html>";
   }
 }
 `;

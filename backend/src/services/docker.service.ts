@@ -43,6 +43,6 @@ export class DockerService {
     const result = await exec(
       `docker inspect -f '{{.State.Running}}' ${containerName}`
     );
-    return Boolean(result.stdout.trim());
+    return result.stdout.trim() === "true";
   }
 }

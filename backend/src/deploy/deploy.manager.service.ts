@@ -76,12 +76,12 @@ export class DeployManagerService {
         dto?.description ?? "",
         new Date().toISOString()
       );
-      deploymentState.dbRecordCreated = true;
       await this.sqliteDBService.saveDeploymentData(user!.uid, {
         repoUrl: dto.repoUrl,
         subdomain: projectName,
         description: dto?.description,
       });
+      deploymentState.dbRecordCreated = true;
 
       await this.gitService.cleanupRepository(repoPath);
 
@@ -108,16 +108,15 @@ export class DeployManagerService {
         `Container ${containerName} does not exist`
       );
     }
+    const isRunning = await this.dockerService.checkIfRunning(containerName);
     await this.dockerService.removeContainer(containerName);
     await this.dockerService.removeImage(containerName);
     await this.robleDBService.deleteDeploymentData(accessToken, containerName);
     await this.sqliteDBService.deleteDeploymentData(containerName);
-    await this.reverseProxyService.removeSubdomainConfig(containerName);
+    if (isRunning)
+      await this.reverseProxyService.removeSubdomainConfig(containerName);
   }
 
-  // TODO: agreagar metodo para congelar deploys (para no consumir recursos)
-  // esto implica detener el contenedor y actualizar la base de datos
-  // como sabemos cuanto tiempo ha estado sin usarse un contenedor? nadie sabe jaja
   async notifyAccess(projectName: string) {
     await this.sqliteDBService.notifyAccess(projectName);
   }

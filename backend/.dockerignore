@@ -26,3 +26,6 @@ __tests__
 .eslintrc.*
 eslint.config.*
 
+# API Test
+REST-*.http
+

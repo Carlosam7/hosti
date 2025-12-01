@@ -1,13 +1,12 @@
 import { Router } from "express";
-import dbRoutes from "../db/db.routes.js";
 import authRoutes from "../auth/auth.routes.js";
 import deployRoutes from "../deploy/deploy.routes.js";
-import { authMiddleware } from "../auth/auth.middleware.js";
+import { hostMiddleware } from "../monitor/host.middleware.js";
 
 const router = Router();
 
+router.get("/", hostMiddleware);
 router.use("/auth", authRoutes);
-router.use("/db", authMiddleware, dbRoutes);
-router.use("/deploy", authMiddleware, deployRoutes);
+router.use("/deploy", deployRoutes);
 
 export default router;

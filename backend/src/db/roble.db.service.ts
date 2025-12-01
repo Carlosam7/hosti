@@ -1,6 +1,9 @@
 import { dbClient } from "../shared/config/axios.config.js";
 
-export class DBService {
+export class RobleDBService {
+  private static instance: RobleDBService;
+  private constructor() {}
+
   async createUser(
     accessToken: string,
     UID: string,
@@ -65,16 +68,24 @@ export class DBService {
     return res.data;
   }
 
-  async checkExistingRepository(accessToken: string, subdomain: string) {
-    const res = await dbClient.get("/read", {
+  async deleteDeploymentData(accessToken: string, projectName: string) {
+    const res = await dbClient.delete("/delete", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
+      data: {
         tableName: "deployment",
-        subdomain,
+        idColumn: "subdomain",
+        idValue: projectName,
       },
     });
-    return res.data.length > 0;
+    return res.data;
+  }
+
+  static getInstance(): RobleDBService {
+    if (!RobleDBService.instance) {
+      RobleDBService.instance = new RobleDBService();
+    }
+    return RobleDBService.instance;
   }
 }

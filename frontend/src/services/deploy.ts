@@ -43,8 +43,7 @@ export async function createDeployment(input: CreateDeploymentInput): Promise<De
         subdomain: input.subdomain,
         description: input.description,
       }),
-    },
-    true,
+    }
   )
 
   // 2) Creamos el modelo de frontend
@@ -67,7 +66,7 @@ export async function createDeployment(input: CreateDeploymentInput): Promise<De
 }
 
 export async function deleteDeployment(subdomain: string): Promise<void> {
-  await apiRequest<void>(`/deploy/${encodeURIComponent(subdomain)}`, { method: "DELETE" }, true)
+  await apiRequest<void>(`/deploy/${encodeURIComponent(subdomain)}`, { method: "DELETE" })
 
   deployments = deployments.filter((d) => d.subdomain !== subdomain)
 }

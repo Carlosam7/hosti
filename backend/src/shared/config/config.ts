@@ -20,7 +20,27 @@ export const config = {
 const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
   ? process.env.CORS_ALLOWED_ORIGINS.split(",")
   : ["http://localhost:3000"];
+
+const allowedDomains = process.env.CORS_ALLOWED_DOMAINS
+  ? process.env.CORS_ALLOWED_DOMAINS.split(",")
+  : ["localhost"];
+
 export const corsOptions = {
-  origin: allowedOrigins,
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) => {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    const isAllowedDomain = allowedDomains.some((domain) =>
+      origin.endsWith(domain)
+    );
+    if (isAllowedDomain) return callback(null, true);
+
+    console.warn(`CORS policy: Blocked origin ${origin}`);
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 };

@@ -38,4 +38,11 @@ export class DockerService {
     );
     return result.stdout.trim() === containerName;
   }
+
+  async checkIfRunning(containerName: string): Promise<boolean> {
+    const result = await exec(
+      `docker inspect -f '{{.State.Running}}' ${containerName}`
+    );
+    return Boolean(result.stdout.trim());
+  }
 }

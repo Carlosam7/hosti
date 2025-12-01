@@ -6,7 +6,7 @@
   }
 
   .btn-primary {
-    @apply cursor-pointer rounded-full px-5 py-2 bg-linear-to-tr from-[#00ff88] to-[#008781] text-white font-medium;
+    @apply cursor-pointer rounded-full px-5 py-2 bg-linear-to-tr from-[#00968e] to-[#2dd4cf] hover:bg-linear-to-br text-white font-medium transition-colors duration-700 ease-in-out;
   }
 
   .btn-secondary {

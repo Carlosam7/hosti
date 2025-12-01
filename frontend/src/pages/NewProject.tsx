@@ -70,6 +70,8 @@ export default function NewProject() {
   const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const [user, setUser] = useState(null);
+
   // Validaciones
   const PROJECT_RE = /^(?!-)(?!.*--)[a-z0-9-]{3,32}(?<!-)$/ // minúsculas, números y -, sin guiones al inicio/fin ni dobles
   const GITHUB_URL_RE = /^https:\/\/github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\.git)?$/
@@ -112,12 +114,14 @@ export default function NewProject() {
       setError(null)
 
       try {
-          const deployment = await createDeployment({
+          const deployment = await createDeployment(
+            {
               repoUrl: repoUrl.trim(),
               subdomain: projectName.trim(),
               description: selectedTemplate?.description ?? "",
               templateId: selectedTemplateId,
-          })
+            }
+          )
 
           window.location.assign(deployment.publicUrl)
       } catch (err) {
@@ -143,6 +147,21 @@ export default function NewProject() {
             Hosti
           </span>
         </h1>
+        <button onClick={async() => {
+          const res = await fetch('http://localhost:3000/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email: "carlosarango1107@outlook.com", password: "Pass@1234"}),
+            credentials: 'include'
+          })
+          const data = await res.json()
+          setUser(data)
+          console.log(data)
+        }}>
+          Iniciar sesión
+        </button>
         <p className="mt-2 text-sm md:text-base text-gray-600 text-center">
           Selecciona una plantilla, conecta tu repositorio y despliega automáticamente.
         </p>
@@ -184,7 +203,7 @@ export default function NewProject() {
                 {TEMPLATES.map((t) => {
                   const selected = selectedTemplateId === t.id
                   return (
-                    <button
+                    <div
                       key={t.id}
                       onClick={() => setSelectedTemplateId(t.id)}
                       className={[
@@ -232,7 +251,7 @@ export default function NewProject() {
                           </svg>
                         </button>
                       </div>
-                    </button>
+                    </div>
                   )
                 })}
               </div>

@@ -27,7 +27,7 @@ function DashboardDesktop () {
 
     return (
         <>
-            <div className="flex flex-col justify-start items-center w-full min-h-screen bg-background py-[170px] px-15">
+            <div className="flex flex-col justify-start items-center w-full min-h-screen bg-background pt-[170px] px-15">
                 {/* Main Content */}
                 <main className="flex flex-col w-full container mx-auto space-y-16">
 
@@ -49,13 +49,13 @@ function DashboardDesktop () {
                                     Nuevo Proyecto
                                 </button>
                             {/* </Link> */}
-                        </section>
+                    </section>
                     
-                    {projects === 0 ? (
+                    {projects === 1 ? (
                         <NoProject/>
-                    ) : ( 
+                    ) : (
                         <>
-                        <section className={`${ancho} justify-center gap-10`}>
+                        <section className={`${ancho} justify-center gap-10 mb-16`}>
                             <CardProject border={"hover:border-[#61dbfb]"} shadow={"hover:shadow-[0_0_5px_0px_#61dbfb]"} name="Este es un proyecto"/>
                             <CardProject border={"hover:border-gray-400"} shadow={"hover:shadow-[0_0_5px_0px_#99a1af]"} name="Proyecto"/>
                             <CardProject border={"hover:border-[#306998]"} shadow={"hover:shadow-[0_0_5px_0px_#306998aa]"} name="Este es un proyecto"/>

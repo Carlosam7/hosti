@@ -4,7 +4,7 @@ function Navbar () {
             <nav className="fixed z-10 flex justify-center items-center w-full h-[70px] bg-white shadow-md px-20">
                 <div className="flex items-center container h-full">
                     <section>
-                        <img src="" alt="Logo" />
+                        <img src="#" alt="Logo" />
                     </section>
 
                     <section className="flex justify-center items-center w-full">

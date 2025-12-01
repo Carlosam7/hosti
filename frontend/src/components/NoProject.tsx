@@ -4,7 +4,7 @@ function NoProject () {
     return (
         <>
             <div className="flex flex-col justify-center items-center w-full border border-[#eeeeee] rounded-2xl shadow-[0_0_10px_0_#eeeeee] p-15">
-                <div className="flex justify-center items-center w-[70px] h-[70px] bg-linear-to-tl from-[#00ffaa] to-[#008781] rounded-full">
+                <div className="flex justify-center items-center w-[70px] h-[70px] bg-linear-to-tl from-[#2dd4cf] to-[#008781] rounded-full">
                     <img src="#" alt="Logo" />
                 </div>
                 <h2 className="font-bold my-5">No tienes proyectos todavía</h2>

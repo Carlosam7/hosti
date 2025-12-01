@@ -10,6 +10,12 @@ export class DeployRepository {
     });
   }
 
+  async findByUserId(userId: string) {
+    return this.prisma.deploy.findMany({
+      where: { userId },
+    });
+  }
+
   async getAllDeployments() {
     return this.prisma.deploy.findMany();
   }

@@ -2,6 +2,8 @@ import type { NextFunction, Request, Response } from "express";
 import { SqliteDBService } from "../db/sqlite.db.service.js";
 import { DeployModule } from "../deploy/deploy.module.js";
 
+const pendingWakeUps = new Set<string>();
+
 export const hostMiddleware = async (
   req: Request,
   res: Response,
@@ -29,12 +31,19 @@ export const hostMiddleware = async (
 
     console.log(`Waking up host ${subdomain}`);
 
+    if (pendingWakeUps.has(subdomain)) {
+      console.log(`Host ${subdomain} is already waking up.`);
+      return res.status(412).end();
+    }
+
+    pendingWakeUps.add(subdomain);
     const deployManager = DeployModule.getDeployManager();
     deployManager
       .wakeUp(subdomain)
       .then(() => deployManager.notifyAccess(subdomain))
-      .then(() => console.log(`Host ${subdomain} is now active.`));
-
+      .then(() => console.log(`Host ${subdomain} is now active.`))
+      .catch((err) => console.error(`Error waking up host ${subdomain}:`, err))
+      .finally(() => pendingWakeUps.delete(subdomain));
     return res.status(412).end();
   } catch (err) {
     return next(err);

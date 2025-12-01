@@ -1,5 +1,6 @@
 // src/services/auth.ts
 import { apiRequest, setTokens } from "./http"
+const BASE_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:3000"
 
 export type User = {
   id: string
@@ -61,9 +62,10 @@ export async function signup(name: string, email: string, password: string): Pro
 }
 
 export async function refresh(): Promise<void> {
-  await apiRequest<{ accessToken: string }>("/auth/refresh", { method: "POST" })
-  // si tu endpoint devuelve el token en el body, podrías hacer:
-  // setTokens({ accessToken: data.accessToken })
+  const data = await apiRequest<{ accessToken?: string }>("/auth/refresh-token", { method: "POST" })
+  if (data?.accessToken) {
+    setTokens({ accessToken: data.accessToken })
+  }
 }
 
 export async function logout(): Promise<void> {
@@ -82,5 +84,11 @@ export function getCurrentUser(): User | null {
 }
 
 export function isAuthenticated(): boolean {
-  return !!currentUser
+  // Considera autenticado si hay usuario o si existe un accessToken persistido
+  return !!currentUser || !!localStorage.getItem('accessToken')
+}
+
+export function loginWithRoble(): void {
+  // Redirige al flujo OAuth del backend
+  window.location.href = `${BASE_URL}/auth/roble`
 }

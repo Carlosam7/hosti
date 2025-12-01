@@ -29,7 +29,7 @@ export class DockerService {
   }
 
   async removeContainer(containerName: string): Promise<void> {
-    await exec(`docker rm ${containerName} --force`);
+    await exec(`docker rm ${containerName}`);
   }
 
   async checkIfExists(containerName: string): Promise<boolean> {

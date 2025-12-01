@@ -41,9 +41,13 @@ export class DeployModule {
   }
 
   static getInstance(): DeployModule {
-    if (!DeployModule.instance) {
-      DeployModule.instance = new DeployModule();
+    if (!this.instance) {
+      this.instance = new DeployModule();
     }
-    return DeployModule.instance;
+    return this.instance;
+  }
+
+  static getDeployManager(): DeployManagerService {
+    return this.getInstance().deployManager;
   }
 }

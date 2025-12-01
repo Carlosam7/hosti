@@ -20,6 +20,14 @@ export class DockerService {
     );
   }
 
+  async stopContainer(containerName: string): Promise<void> {
+    await exec(`docker stop ${containerName}`);
+  }
+
+  async startContainer(containerName: string): Promise<void> {
+    await exec(`docker start ${containerName}`);
+  }
+
   async removeContainer(containerName: string): Promise<void> {
     await exec(`docker rm ${containerName} --force`);
   }

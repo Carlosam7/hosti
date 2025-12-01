@@ -53,7 +53,6 @@ export class DeployController {
     const { project } = req.params;
     if (!project) throw new BadRequestException("Missing param 'project'");
 
-    console.log(`Notifying access for project: ${project}`);
     try {
       await this.deployManager.notifyAccess(project);
       return res.sendStatus(204);

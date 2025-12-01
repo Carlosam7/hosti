@@ -1,9 +1,13 @@
 import { Router } from "express";
 import authRoutes from "../auth/auth.routes.js";
 import deployRoutes from "../deploy/deploy.routes.js";
+import { hostMiddleware } from "../monitor/host.middleware.js";
 
 const router = Router();
 
+router.get("/", hostMiddleware, (req, res) => {
+  res.send("Welcome to Hosti!");
+});
 router.use("/auth", authRoutes);
 router.use("/deploy", deployRoutes);
 

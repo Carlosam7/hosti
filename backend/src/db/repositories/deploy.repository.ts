@@ -10,6 +10,23 @@ export class DeployRepository {
     });
   }
 
+  async getAllDeployments() {
+    return this.prisma.deploy.findMany();
+  }
+
+  async getActiveDeployments() {
+    return this.prisma.deploy.findMany({
+      where: { active: true },
+    });
+  }
+
+  async updateActiveStatus(subdomain: string, active: boolean) {
+    return this.prisma.deploy.update({
+      where: { subdomain },
+      data: { active },
+    });
+  }
+
   async create(userId: string, dto: CreateDeployDto) {
     return this.prisma.deploy.create({
       data: {

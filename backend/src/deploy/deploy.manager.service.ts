@@ -65,6 +65,7 @@ export class DeployManagerService {
         projectName,
         config.nginxPort
       );
+      await this.reverseProxyService.reloadProxy();
       deploymentState.proxyConfigured = true;
 
       await this.robleDBService.uploadDeploymentData(
@@ -109,16 +110,32 @@ export class DeployManagerService {
     }
     await this.dockerService.removeContainer(containerName);
     await this.dockerService.removeImage(containerName);
-    await this.robleDBService.deleteDeploymentData(accessToken, projectName);
+    await this.robleDBService.deleteDeploymentData(accessToken, containerName);
+    await this.sqliteDBService.deleteDeploymentData(containerName);
     await this.reverseProxyService.removeSubdomainConfig(containerName);
   }
-
-  // TODO: agregar metodo para eliminar deploys
 
   // TODO: agreagar metodo para congelar deploys (para no consumir recursos)
   // esto implica detener el contenedor y actualizar la base de datos
   // como sabemos cuanto tiempo ha estado sin usarse un contenedor? nadie sabe jaja
   async notifyAccess(projectName: string) {
     await this.sqliteDBService.notifyAccess(projectName);
+  }
+
+  async slpeep(projectName: string) {
+    await this.reverseProxyService.removeSubdomainConfig(projectName);
+    await this.dockerService.stopContainer(projectName);
+    await this.sqliteDBService.updateActiveStatus(projectName, false);
+    await this.reverseProxyService.reloadProxy();
+  }
+
+  async wakeUp(projectName: string) {
+    await this.dockerService.startContainer(projectName);
+    await this.sqliteDBService.updateActiveStatus(projectName, true);
+    await this.reverseProxyService.createSubdomainConfig(
+      projectName,
+      config.nginxPort
+    );
+    await this.reverseProxyService.reloadProxy();
   }
 }

@@ -24,8 +24,24 @@ export class SqliteDBService {
     return this.deployRepository.findUnique(subdomain);
   }
 
+  async getAllDeployments() {
+    return await this.deployRepository.getAllDeployments();
+  }
+
+  async getActiveDeployments() {
+    return await this.deployRepository.getActiveDeployments();
+  }
+
+  async updateActiveStatus(subdomain: string, active: boolean) {
+    return await this.deployRepository.updateActiveStatus(subdomain, active);
+  }
+
   async saveDeploymentData(userId: string, dto: CreateDeployDto) {
     await this.deployRepository.create(userId, dto);
+  }
+
+  async deleteDeploymentData(subdomain: string) {
+    await this.deployRepository.delete(subdomain);
   }
 
   async notifyAccess(subdomain: string) {

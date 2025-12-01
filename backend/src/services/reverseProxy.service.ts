@@ -15,15 +15,28 @@ server {
   listen 80;
   server_name ${containerName}.localhost;
 
+  location / {
+    auth_request /notify-access;
+    auth_request_set $auth_status $upstream_status;
+
+    if ($auth_status = 412) {
+      return 412;
+    }
+
+    error_page 412 = @wake_up;
+    proxy_pass http://${containerName}:${port};
+  }
+
   location /notify-access {
     internal;
     rewrite ^/notify-access$ /deploy/notify-access/${containerName} break;
     proxy_pass http://${config.backendUrl};
   }
 
-  location / {
-    auth_request /notify-access;
-    proxy_pass http://${containerName}:${port};
+  location @wake_up {
+    add_header Refresh "1; url=$scheme://$host$request_uri";
+    add_header Content-Type text/html;
+    return 200 "<html><body><h1>welcome to Hosti!. Your project is waking up...</h1></body></html>";
   }
 }
 `;
@@ -31,12 +44,15 @@ server {
     const confPath = `${config.nginxConfPath}/${containerName}.conf`;
 
     await fs.writeFile(confPath, conf);
-    await exec("docker exec nginx nginx -s reload");
   }
 
   async removeSubdomainConfig(containerName: string) {
     const confPath = `${config.nginxConfPath}/${containerName}.conf`;
     await fs.unlink(confPath);
+    await exec("docker exec nginx nginx -s reload");
+  }
+
+  async reloadProxy() {
     await exec("docker exec nginx nginx -s reload");
   }
 }

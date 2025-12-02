@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { loginTwo } from "../services/auth";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 // Icons
 import { FaGithub } from "react-icons/fa";
 import { TbDatabaseImport } from "react-icons/tb";
@@ -9,10 +10,14 @@ import { MdKey } from "react-icons/md";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import { ImRocket } from "react-icons/im";
-// import { useNavigate } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { login, register } = useAuth();
+  const [isRegister, setIsRegister] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,20 +30,22 @@ export default function Login() {
     setError(null);
 
     try {
-        const res = await loginTwo(email, password);
-        console.log("Login OK:", res);
-        // useNavigate("/dashboard")
-      // REDIRECT AL DASHBOARD
-      window.location.href = "/dashboard";
+      if (isRegister) {
+        await register(name, email, password);
+      } else {
+        await login(email, password);
+      }
+      navigate("/dashboard");
     } catch (err: any) {
-      setError(err?.message || "Error al iniciar sesión");
+      setError(err?.message || (isRegister ? "Error al registrarse" : "Error al iniciar sesión"));
     } finally {
       setLoading(false);
     }
   }
 
+
   return (
-    <main className="min-h-screen flex items-center justify-center bg-linear-to-br bg-size-[400%_400%] animate-gradientShift p-4">
+    <main className="h-dvh flex items-center justify-center bg-linear-to-br animate-gradientShift p-4">
       <section aria-label="Autenticación" className="flex w-full max-w-4xl bg-white/95 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md">
 
         {/* LEFT PANEL */}
@@ -59,10 +66,14 @@ export default function Login() {
         </aside>
 
         {/* RIGHT PANEL */}
-        <section className="flex-1 p-10" aria-label="Formulario de inicio de sesión">
+        <section className="flex-1 p-10" aria-label={isRegister ? "Formulario de registro" : "Formulario de inicio de sesión"}>
           <header className="mb-8">
-            <h1 className="text-3xl font-semibold text-teal-700">Bienvenido de nuevo</h1>
-            <p className="text-gray-500 text-sm">Ingresa tus credenciales para continuar</p>
+            <h1 className="text-3xl font-semibold text-teal-700">
+              {isRegister ? "Crear cuenta" : "Bienvenido de nuevo"}
+            </h1>
+            <p className="text-gray-500 text-sm">
+              {isRegister ? "Completa los campos para registrarte" : "Ingresa tus credenciales para continuar"}
+            </p>
           </header>
 
           {error && (
@@ -72,6 +83,29 @@ export default function Login() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            {/* Campo de nombre (solo en modo registro) */}
+            {isRegister && (
+              <div>
+                <label htmlFor="name" className="block text-sm font-semibold text-teal-700 mb-1">
+                  Nombre completo
+                </label>
+                <div className="relative">
+                  <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-black" aria-hidden="true" />
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    required
+                    placeholder="Juan Pérez"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-12 p-3 bg-white rounded-lg border-2 border-gray-200 focus:border-teal-400 focus:ring-4 focus:ring-teal-300/30 transition"
+                  />
+                </div>
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-teal-700 mb-1">Correo electrónico</label>
               <div className="relative">
@@ -99,7 +133,7 @@ export default function Login() {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
+                  autoComplete={isRegister ? "new-password" : "current-password"}
                   required
                   placeholder="••••••••"
                   value={password}
@@ -120,23 +154,28 @@ export default function Login() {
               type="submit"
               className="w-full p-3 rounded-lg bg-linear-to-br from-teal-500 to-teal-400 text-white font-semibold shadow-lg hover:scale-[1.02] transition disabled:opacity-50"
             >
-              {loading ? "Iniciando..." : "Iniciar Sesión"}
+              {loading ? (isRegister ? "Registrando..." : "Iniciando...") : (isRegister ? "Crear cuenta" : "Iniciar Sesión")}
             </button>
           </form>
 
           <div className="my-6 flex items-center" aria-hidden="true">
-            <div className="flex-1 h-[1px] bg-gray-200"></div>
+            <div className="flex-1 h-px bg-gray-200"></div>
             <span className="px-3 text-sm">o continúa con</span>
-            <div className="flex-1 h-[1px] bg-gray-200"></div>
+            <div className="flex-1 h-px bg-gray-200"></div>
           </div>
 
           <button
             type="button"
-            aria-label="Registrarse"
+            onClick={() => {
+              setIsRegister(!isRegister);
+              setError(null);
+              setName("");
+              setEmail("");
+              setPassword("");
+            }}
             className="w-full p-3 bg-gray-400 hover:bg-gray-500 text-white rounded-lg font-semibold flex items-center justify-center gap-3 transition"
-
           >
-            Registrarme
+            {isRegister ? "¿Ya tienes cuenta? Inicia sesión" : "¿No tienes cuenta? Regístrate"}
           </button>
         </section>
       </section>

@@ -1,17 +1,23 @@
-
-import Login from './pages/Login'
-
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import Navbar from './components/navbar';
+import AppRoutes from './routes/AppRoutes.tsx';
+import './App.css';
+import NewProject from './pages/NewProject.tsx';
 
 function App() {
   return (
-    <>
-    <div className='flex justify-center w-full min-w-[350px]'>
-
-      <Login/>
-
-    </div>
-    </>
-  )
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="flex flex-col bg-white">
+          {/* <NewProject />  */}
+          <div className="">
+            <AppRoutes />
+          </div>
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

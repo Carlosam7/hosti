@@ -6,7 +6,7 @@ function LandingPageCard ({ icon, title, description } : { icon:React.ReactNode,
 
                 </div>
                 <div className="flex absolute">
-{icon}
+                    {icon}
                 </div>
             </div>
 

@@ -3,13 +3,28 @@ import LandingPageCard from "../../components/landingPageCard"
 import { TiSocialGithub } from "react-icons/ti"
 import { BsLayoutWtf, BsLightningCharge } from "react-icons/bs"
 import { LuSettings } from "react-icons/lu"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext"
+import Navbar from "../../components/navbar"
 
 function LandingPageDesktop () {
+    const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+
+    const handleGetStarted = () => {
+        if (isAuthenticated) {
+            navigate('/dashboard');
+        } else {
+            navigate('/login');
+        }
+    };
+
     return (
         <main className="w-full h-screen">
             <section className={`relative flex flex-col justify-center items-center w-full h-screen gap-28`}>
-                {/* <div className="absolute bottom-0 rounded-t-full w-full h-full bg-white shadow-t-2xl shadow-[#00c066]">
-                </div> */}
+                <div className="w-[80%]">
+                    <Navbar />
+                </div>
                 <img src="#" alt="logo" />
                 <div className="flex flex-col w-full justify-center items-center text-5xl px-5 font-bold text-center">
                     <div className="flex items-center gap-2 px-5 py-3 mb-10 font-medium text-[15px] text-[#008781] rounded-full bg-[#3ab8b020]">
@@ -26,7 +41,10 @@ function LandingPageDesktop () {
                         With Hosti, you can create and manage your web projects without complications.
                     </p>
                     <div className="flex items-center h-[70px] font-medium text-sm gap-2 mt-5 lg:text-lg lg:gap-5 lg:mt-10">
-                        <button className="cursor-pointer h-[50px] w-[150px] hover:shadow-[0_0_30px_0px_#00ffaa] transform hover:scale-105 transition-all duration-500 btn-primary">
+                        <button 
+                            onClick={handleGetStarted}
+                            className="cursor-pointer h-[50px] w-[150px] hover:shadow-[0_0_30px_0px_#00ffaa] transform hover:scale-105 transition-all duration-500 btn-primary"
+                        >
                             Get start
                         </button>
                         <button className="cursor-pointer w-[100px] h-[50px] lg:w-[150px] btn-secondary">

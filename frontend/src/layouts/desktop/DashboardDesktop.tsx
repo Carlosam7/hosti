@@ -1,33 +1,38 @@
 import { BiPlus } from "react-icons/bi";
 import CardWelcome from "../../components/CardWelcome";
 import CardDashboard from "../../components/CardDashboard";
-import CardProject from "../../components/CardProject";
-import useScreenWidth from "../../hooks/useScreenWidth";
 import { useEffect, useState } from "react";
-import NoProject from "../../components/NoProject";
+import getProjects from "../../services/getProjects";
+import type { Project } from "../../types/project";
+import ViewProjects from "../../components/ViewProjects";
 
 function DashboardDesktop () {
-    const w = useScreenWidth();
-    const [ancho, setAncho] = useState("");
-    const [projects, setProjects] = useState(0);
-
-
+    
+    const [loading, setLoading] = useState(true);
+    const [listProject, setListProject] = useState<Project[]>([]);
+    
     useEffect(() => {
-        const tamaño = w/4
-        if (tamaño < 320) {
-            setAncho("grid grid-cols-2")
-            console.log('Este es el tamaño: ', tamaño)
-        } else {
-            setAncho("grid grid-cols-3")
-    }
-    console.log(w/4)
-    }, [w])
-
-
+        const getListProjects = async () => {
+            setLoading(true);
+            try {
+                const projects: Project[] = await getProjects()
+                if (!projects) {
+                    throw new Error('No se encontraron proyectos.')
+                }
+                setListProject(projects)
+            } catch (error) {
+                console.error(error);
+                setListProject([])
+            } finally {
+                setLoading(false)
+            }
+        }
+        getListProjects()
+    }, [])
 
     return (
         <>
-            <div className="flex flex-col justify-start items-center w-full min-h-screen bg-background pt-[170px] px-15">
+            <div className="flex flex-col justify-start items-center w-full min-h-screen bg-background pt-[160px] px-15">
                 {/* Main Content */}
                 <main className="flex flex-col w-full container mx-auto space-y-16">
 
@@ -51,18 +56,7 @@ function DashboardDesktop () {
                             {/* </Link> */}
                     </section>
                     
-                    {projects === 1 ? (
-                        <NoProject/>
-                    ) : (
-                        <>
-                        <section className={`${ancho} justify-center gap-10 mb-16`}>
-                            <CardProject border={"hover:border-[#61dbfb]"} shadow={"hover:shadow-[0_0_5px_0px_#61dbfb]"} name="Este es un proyecto"/>
-                            <CardProject border={"hover:border-gray-400"} shadow={"hover:shadow-[0_0_5px_0px_#99a1af]"} name="Proyecto"/>
-                            <CardProject border={"hover:border-[#306998]"} shadow={"hover:shadow-[0_0_5px_0px_#306998aa]"} name="Este es un proyecto"/>
-                            <CardProject border={"hover:border-[#61dbfb]"} shadow={"hover:shadow-[0_0_5px_0px_#61dbfb]"} name="Este es un proyecto"/>
-                        </section>
-                        </>
-                    )}
+                    <ViewProjects loading={loading} listProject={listProject} />
                 </main>
             </div>
         </>

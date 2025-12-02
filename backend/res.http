@@ -39,4 +39,4 @@ Content-Type: application/json
 
 ### delete
 # @prompt subdomain
-DELETE http://localhost:3000/deploy/{{subdomain}}
+DELETE http://localhost:3000/deploy/host

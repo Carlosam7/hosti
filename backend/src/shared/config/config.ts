@@ -1,4 +1,4 @@
-export const config = {
+export const appConfig = {
   port: process.env.PORT || 3000,
   robleUrl: process.env.ROBLE_URL,
   tokenContract: process.env.TOKEN_CONTRACT,
@@ -15,6 +15,8 @@ export const config = {
       ? "/app/nginx/conf.d"
       : "nginx/conf.d",
   nginxPort: 80,
+  workerCheckIntervalS: 30, // Check every 30 seconds
+  workerInactivityThresholdS: 120, // Threshold of 120 seconds
 };
 
 const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS

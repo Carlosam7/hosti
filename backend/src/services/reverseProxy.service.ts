@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import { exec } from "../shared/utils/exec.util.js";
-import { config } from "../shared/config/config.js";
+import { appConfig } from "../shared/config/config.js";
 
 export class ReverseProxyService {
   // cada contenedor se va a crear con un nombre unico basado en
@@ -23,18 +23,18 @@ server {
   location /notify-access {
     internal;
     rewrite ^/notify-access$ /deploy/notify-access/${containerName} break;
-    proxy_pass http://${config.backendUrl};
+    proxy_pass http://${appConfig.backendUrl};
   }
 }
 `;
 
-    const confPath = `${config.nginxConfPath}/${containerName}.conf`;
+    const confPath = `${appConfig.nginxConfPath}/${containerName}.conf`;
 
     await fs.writeFile(confPath, conf);
   }
 
   async removeSubdomainConfig(containerName: string) {
-    const confPath = `${config.nginxConfPath}/${containerName}.conf`;
+    const confPath = `${appConfig.nginxConfPath}/${containerName}.conf`;
     await fs.unlink(confPath);
     await exec("docker exec nginx nginx -s reload");
   }

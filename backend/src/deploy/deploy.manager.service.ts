@@ -6,7 +6,7 @@ import {
   ConflictException,
 } from "../shared/exceptions/http.exception.js";
 import { ReverseProxyService } from "../services/reverseProxy.service.js";
-import { config } from "../shared/config/config.js";
+import { appConfig } from "../shared/config/config.js";
 import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
 import type { IUser } from "../auth/auth.types.js";
 import type { DeployRollbackService } from "./deploy-rollback.service.js";
@@ -57,13 +57,13 @@ export class DeployManagerService {
       await this.dockerService.runContainer(
         projectName,
         projectName,
-        config.nginxPort
+        appConfig.nginxPort
       );
       deploymentState.containerRunning = true;
 
       await this.reverseProxyService.createSubdomainConfig(
         projectName,
-        config.nginxPort
+        appConfig.nginxPort
       );
       await this.reverseProxyService.reloadProxy();
       deploymentState.proxyConfigured = true;
@@ -136,7 +136,7 @@ export class DeployManagerService {
     await this.sqliteDBService.updateActiveStatus(projectName, true);
     await this.reverseProxyService.createSubdomainConfig(
       projectName,
-      config.nginxPort
+      appConfig.nginxPort
     );
     await this.reverseProxyService.reloadProxy();
   }

@@ -1,12 +1,12 @@
 import { exec } from "../shared/utils/exec.util.js";
-import { config } from "../shared/config/config.js";
+import { appConfig } from "../shared/config/config.js";
 import { randomUUID } from "crypto";
 import fs from "fs";
 import path from "path";
 
 export class GitService {
   async cloneRepository(repoUrl: string): Promise<string> {
-    const dir = path.join(config.tmpRepoPath, randomUUID());
+    const dir = path.join(appConfig.tmpRepoPath, randomUUID());
     await exec(`git clone ${repoUrl} ${dir}`);
 
     if (!fs.existsSync(dir)) {

@@ -22,7 +22,7 @@ function LandingPageDesktop () {
     return (
         <main className="w-full h-screen">
             <section className={`relative flex flex-col justify-center items-center w-full h-screen gap-28`}>
-                <div className="w-[80%]">
+                <div className="w-full absolute top-0 left-0">
                     <Navbar />
                 </div>
                 <img src="#" alt="logo" />

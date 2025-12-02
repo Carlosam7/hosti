@@ -125,10 +125,10 @@ export default function NewProject() {
     <>
 
       <div className="relative flex flex-col justify-center items-center w-full h-screen bg-background">
-        <div className="w-[80%]">
+        <div className="w-full  absolute top-0 left-0">
           <Navbar />
         </div>
-        <div className="w-full h-[calc(100vh-70px)] bg-background overflow-y-auto">
+        <div className="w-full p-[5%] h-[calc(100vh-70px)] bg-background overflow-y-auto">
 
           {/* Hero con gradiente igual al dashboard */}
           <section className="relative flex flex-col items-center w-full pt-8 pb-4">

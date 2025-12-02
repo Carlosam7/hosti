@@ -22,7 +22,6 @@ function Navbar() {
                 <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition">
                     <span className="hidden md:block text-xl font-bold text-teal-700">Hosti</span>
                     <ImRocket className="text-3xl text-teal-600" />
-
                 </Link>
 
                 {/* Menú central */}

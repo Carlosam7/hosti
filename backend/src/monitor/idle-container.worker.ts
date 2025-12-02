@@ -29,8 +29,6 @@ export class IdleContainerWorker {
     const now = Date.now();
     const activeDeployments = await this.sqlite.getActiveDeployments();
 
-    //console.log(`Checking for idle hosts at ${new Date(now).toISOString()}`);
-
     for (const deploy of activeDeployments) {
       const lastAccess = deploy.lastAccess;
       const diff = now - new Date(lastAccess).getTime();

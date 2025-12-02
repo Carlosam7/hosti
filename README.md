@@ -47,7 +47,6 @@ El video de demostración incluye:
 - **Creación y despliegue de un proyecto**: Flujo completo desde la selección de template hasta el despliegue
 - **Funcionamiento de la gestión de recursos y apagado automático**: Demostración del sistema de monitoreo y apagado de contenedores inactivos
 
-> **Nota**: El enlace al video de YouTube debe ser agregado por el equipo.
 
 ## 🏗️ Arquitectura y Componentes
 
@@ -183,8 +182,8 @@ El backend está estructurado en módulos siguiendo el patrón de arquitectura p
 ### Gestión de Recursos
 
 - **Límites por Contenedor**:
-  - CPU: 0.5 cores (configurable)
-  - Memoria: 250MB (configurable)
+  - CPU: 0.5 cores (Definido en mi dockerFile)
+  - Memoria: 250MB (Definido en mi dockerFile)
   - Red: Red Docker personalizada (`hosti_net`)
 
 - **Optimización**:
@@ -281,8 +280,8 @@ En `backend/src/shared/config/config.ts`:
 ### Límites de Recursos Docker
 
 En `backend/src/services/docker.service.ts`:
-- CPU: `--cpus="0.5"` (modificable)
-- Memoria: `--memory="250m"` (modificable)
+- CPU: `--cpus="0.5"` (Definido en mi dockerFile)
+- Memoria: `--memory="250m"` (Definido en mi dockerFile)
 
 ## 🚀 Uso
 
@@ -365,16 +364,6 @@ hosti/
 - `GET /deploy` - Obtener todos los proyectos del usuario
 - `POST /deploy/notify-access/:project` - Notificar acceso (interno)
 
-## 🤝 Contribución
-
-Este proyecto fue desarrollado como parte de un trabajo académico. Para contribuir:
-
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
 ## 📝 Licencia
 
 Este proyecto es parte de un trabajo académico. Todos los derechos reservados.
@@ -383,11 +372,11 @@ Este proyecto es parte de un trabajo académico. Todos los derechos reservados.
 
 | Integrante | Rol | GitHub |
 |-----------|------|--------|
-| Esteban Dadul | Backend – Infraestructura – Docker, Compose, Proxy | [@usuario1](https://github.com/usuario1) |
+| Esteban Dadul | Backend – Infraestructura – Docker, Compose, Proxy | [@Edadul](https://github.com/Edadul) |
 | Judith Pérez | Frontend, integración y templates | [@Judithpc23](https://github.com/Judithpc23) |
-| Carlos Arango | Frontend – Dashboard, UI/UX | [@usuario2](https://github.com/usuario2) |
-| Andres Monserrat| Integración fullstack, testing | [@usuario4](https://github.com/usuario4) |
-| Ivan Parra | Documentación, video y soporte de templates | [@usuario5](https://github.com/usuario5) |
+| Carlos Arango | Frontend – Dashboard, UI/UX | [@Carlosam7](https://github.com/Carlosam7) |
+| Andres Monserrat| Integración fullstack, testing | [@AndresMonserrat](https://github.com/AndresMonserrat) |
+| Ivan Parra | Documentación, video y soporte de templates | [@ivanparra19](https://github.com/ivanparra19) |
 
 ---
 

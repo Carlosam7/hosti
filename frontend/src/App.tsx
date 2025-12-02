@@ -9,8 +9,8 @@ function App() {
     <div className='flex justify-center w-full min-w-[350px]'>
       <Navbar/>
       {/* <Dashboard/> */}
-      {/* <LandingPage/> */}
-      <NewProject/>
+      <LandingPage/>
+      {/* <NewProject/> */}
     </div>
     </>
   )

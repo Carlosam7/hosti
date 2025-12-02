@@ -1,0 +1,42 @@
+### -- auth --
+### login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "carlosarango1107@outlook.com",
+  "password": "Pass@1234"
+}
+
+### signup
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Carlos",
+  "email": "carlosarango1107@outlook.com",
+  "password": "Pass@1234"
+}
+
+### refresh
+POST http://localhost:3000/auth/refresh
+
+### logout
+POST http://localhost:3000/auth/logout
+
+### -- deploy --
+### create
+# @prompt subdomain
+# @prompt description
+POST http://localhost:3000/deploy
+Content-Type: application/json
+
+{
+  "repoUrl": "https://github.com/Edadul/Static-page.git",
+  "subdomain": "{{subdomain}}",
+  "description": "{{description}}"
+}
+
+### delete
+# @prompt subdomain
+DELETE http://localhost:3000/deploy/host

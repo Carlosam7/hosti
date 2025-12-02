@@ -1,6 +1,18 @@
 // src/services/http.ts
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000"
 
+// let accessToken: string | null = null
+// let refreshToken: string | null = null
+
+// export function setTokens(tokens: { accessToken: string | null; refreshToken?: string | null }) {
+//   accessToken = tokens.accessToken
+//   refreshToken = tokens.refreshToken ?? null
+// }
+
+// export function getAccessToken() {
+//   return accessToken
+// }
+
 async function rawRequest(path: string, options: RequestInit = {}): Promise<Response> {
   const res = await fetch(`${BASE_URL}${path}`, {
     ...options,
@@ -9,17 +21,18 @@ async function rawRequest(path: string, options: RequestInit = {}): Promise<Resp
   return res
 }
 
-export async function apiRequest<T>(
-  path: string,
-  options: RequestInit = {},
-): Promise<T> {
+export async function apiRequest<T>( path: string, options: RequestInit = {} ): Promise<T> {
+  
   const headers: HeadersInit = {
     "Content-Type": "application/json",
-    ...(options.headers || {}),
   };
 
   // normalize to a Headers instance so we can safely set values
   const headerObj = new Headers(headers)
+
+  // if (requireAuth && accessToken) {
+  //   headerObj.set("Authorization", `Bearer ${accessToken}`)
+  // }
 
   const res = await rawRequest(path, { ...options, headers: headerObj })
 

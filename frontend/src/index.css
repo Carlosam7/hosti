@@ -6,7 +6,7 @@
   }
 
   .btn-primary {
-    @apply cursor-pointer rounded-full px-5 py-2 bg-linear-to-tr from-[#00ff88] to-[#008781] text-white font-medium;
+    @apply cursor-pointer rounded-full px-5 py-2 bg-linear-to-tr from-[#00968e] to-[#2dd4cf] hover:bg-linear-to-br text-white font-medium transition-colors duration-700 ease-in-out;
   }
 
   .btn-secondary {
@@ -36,5 +36,30 @@
 
   .animate-spinGradient {
     animation: spinGradient 3s infinite linear;
+  }
+}
+
+@layer utilities {
+  @keyframes svgStrokeAnim {
+    0% {
+      stroke-dasharray: 2.42777px, 242.77666px;
+      stroke-dashoffset: 0;
+    }
+    12.5% {
+      stroke-dasharray: 33.98873px, 242.77666px;
+      stroke-dashoffset: -26.70543px;
+    }
+    43.75% {
+      stroke-dasharray: 84.97183px, 242.77666px;
+      stroke-dashoffset: -84.97183px;
+    }
+    100% {
+      stroke-dasharray: 2.42777px, 242.77666px;
+      stroke-dashoffset: -240.34889px;
+    }
+  }
+
+  .animate-svg-stroke {
+    animation: svgStrokeAnim 1.6s linear infinite;
   }
 }

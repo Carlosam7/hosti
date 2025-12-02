@@ -1,4 +1,4 @@
-import { BiPlus } from "react-icons/bi"
+import { Link } from "react-router-dom"
 
 function NoProject () {
     return (
@@ -9,8 +9,12 @@ function NoProject () {
                 </div>
                 <h2 className="font-bold my-5">No tienes proyectos todavía</h2>
                 <p className="line-clamp-2">Comienza creando tu primer proyecto desde uno de nuestros templates</p>
-
-                <button className="mt-10 btn-primary hover:scale-105 duration-500">Crear primer proyecto</button>
+                <Link to={'/dashboard/new-project'}>
+                    <button className="mt-10 btn-primary hover:scale-105 duration-500">
+                        Crear primer proyecto
+                    </button>
+                </Link>
+                
             </div>
         </>
     )

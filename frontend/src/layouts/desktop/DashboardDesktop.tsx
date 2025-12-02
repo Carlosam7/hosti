@@ -5,15 +5,17 @@ import { useEffect, useState } from "react";
 import getProjects from "../../services/getProjects";
 import type { Project } from "../../types/project";
 import ViewProjects from "../../components/ViewProjects";
+import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function DashboardDesktop () {
-    
-    const [loading, setLoading] = useState(true);
+    const { isAuthenticated, loading } = useAuth()
+    const [loadingProjects, setLoadingProjects] = useState(true);
     const [listProject, setListProject] = useState<Project[]>([]);
     
     useEffect(() => {
         const getListProjects = async () => {
-            setLoading(true);
+            setLoadingProjects(true);
             try {
                 const projects: Project[] = await getProjects()
                 if (!projects) {
@@ -24,10 +26,13 @@ function DashboardDesktop () {
                 console.error(error);
                 setListProject([])
             } finally {
-                setLoading(false)
+                setLoadingProjects(false)
             }
         }
-        getListProjects()
+
+        if (isAuthenticated && !loading) {
+            getListProjects()
+        }
     }, [])
 
     return (
@@ -48,15 +53,15 @@ function DashboardDesktop () {
                                 <h1 className="text-3xl font-bold mb-2">Mis Proyectos</h1>
                                 <p className="text-muted-foreground">Gestiona todos tus proyectos creados desde templates</p>
                             </div>
-                            {/* <Link href="/dashboard/new-project"> */}
+                            <Link to="/dashboard/new-project">
                                 <button className="flex justify-center items-center gap-4 btn-outline">
                                     <BiPlus className="h-4 w-4" />
                                     Nuevo Proyecto
                                 </button>
-                            {/* </Link> */}
+                            </Link>
                     </section>
                     
-                    <ViewProjects loading={loading} listProject={listProject} />
+                    <ViewProjects loading={loadingProjects} listProject={listProject} />
                 </main>
             </div>
         </>

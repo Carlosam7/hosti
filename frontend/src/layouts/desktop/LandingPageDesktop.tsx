@@ -3,6 +3,7 @@ import LandingPageCard from "../../components/landingPageCard"
 import { TiSocialGithub } from "react-icons/ti"
 import { BsLayoutWtf, BsLightningCharge } from "react-icons/bs"
 import { LuSettings } from "react-icons/lu"
+import { Link } from "react-router-dom"
 
 function LandingPageDesktop () {
     return (
@@ -16,7 +17,7 @@ function LandingPageDesktop () {
                         <BsLightningCharge/>
                         Management your templates
                     </div>
-                    <h1 className="md:mb-2 lg:mb-5">Deploy your repository with <span className="px-5 bg-linear-to-tr from-[#2dd4cf] to-[#008781] rounded-full hover:shadow-[0_0_70px_0px_#00ffaa] transition-all duration-700 text-gray-200">Hosti</span></h1>
+                    <h1 className="mb-2 lg:mb-5">Deploy your repository with <span className="px-5 bg-linear-to-tr from-[#2dd4cf] to-[#008781] rounded-full hover:shadow-[0_0_70px_0px_#00ffaa] transition-all duration-700 text-gray-200">Hosti</span></h1>
                     <h1>and turn it into a functional web service</h1>
                     <p className="hidden md:flex text-[15px] md:text-xl lg:text-2xl font-normal lg:mt-4">
                         With Hosti, you can create and manage your web projects without complications:<br/> select a template, connect your GitHub repository, and let our platform take care of the rest.
@@ -26,12 +27,16 @@ function LandingPageDesktop () {
                         With Hosti, you can create and manage your web projects without complications.
                     </p>
                     <div className="flex items-center h-[70px] font-medium text-sm gap-2 mt-5 lg:text-lg lg:gap-5 lg:mt-10">
-                        <button className="cursor-pointer h-[50px] w-[150px] hover:shadow-[0_0_30px_0px_#3de6c9] transform hover:scale-105 transition-all duration-500 btn-primary">
-                            Get start
-                        </button>
-                        <button className="cursor-pointer w-[100px] h-[50px] lg:w-[150px] btn-secondary">
-                            Contact us
-                        </button>
+                        <Link to={'/login'}>
+                            <button className="cursor-pointer h-[50px] w-[150px] hover:shadow-[0_0_30px_0px_#3de6c9] transform hover:scale-105 transition-all duration-500 btn-primary">
+                                Get start
+                            </button>
+                        </Link>
+                        <Link to={'#'}>
+                            <button className="cursor-pointer w-[100px] h-[50px] lg:w-[150px] btn-secondary">
+                                Contact us
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </section>

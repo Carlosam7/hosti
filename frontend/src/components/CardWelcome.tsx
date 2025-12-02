@@ -1,4 +1,7 @@
+import { useAuth } from "../context/AuthContext"
+
 function CardWelcome () {
+    const { user } = useAuth()
     return (
         <>
             <div className="">
@@ -7,8 +10,8 @@ function CardWelcome () {
                         Welcome back!
                     </h1>
                     <div className="p-5">
-                        <h3 className="font-medium">Your name</h3>
-                        <h3>email.email@email.com</h3>
+                        <h3 className="font-medium">{user?.username}</h3>
+                        <h3>{user?.email}</h3>
                     </div>
                 </section>
                 <section>

@@ -138,36 +138,21 @@ export default function NewProject() {
   }, [step])
 
   return (
-    <div className="w-full pt-[70px] h-[calc(100vh-70px)] bg-[#f8f8f8] overflow-hidden">
+    <div className="flex flex-col justify-center w-full h-screen bg-[#f8f8f8] overflow-hidden">
       {/* Hero con gradiente igual al dashboard */}
-      <section className="relative flex flex-col items-center w-full pt-8 pb-4">
+      <section className="relative w-full pt-8 pb-4">
         <h1 className="mt-4 text-2xl md:text-4xl font-bold text-center text-gray-900">
           Crea tu proyecto con
           <span className="ml-2 px-3 md:px-5 rounded-xl text-white bg-linear-to-tr from-[#3de6c9] to-[#2dd4cf]">
             Hosti
           </span>
         </h1>
-        <button onClick={async() => {
-          const res = await fetch('http://localhost:3000/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email: "carlosarango1107@outlook.com", password: "Pass@1234"}),
-            credentials: 'include'
-          })
-          const data = await res.json()
-          setUser(data)
-          console.log(data)
-        }}>
-          Iniciar sesión
-        </button>
         <p className="mt-2 text-sm md:text-base text-gray-600 text-center">
           Selecciona una plantilla, conecta tu repositorio y despliega automáticamente.
         </p>
       </section>
 
-      <main className="mx-auto max-w-6xl px-6 pb-4 h-[calc(100%-140px)]">
+      <main className="px-6 pb-4">
         {/* Stepper con acento turquesa */}
         <div className="mb-8 flex flex-col items-center">
           <div className="flex items-center justify-center gap-3">

@@ -42,7 +42,7 @@ export class DeployController {
       await this.deployManager.deleteDeploy(
         accessToken,
         projectName,
-        user!.name
+        user!.name.toLowerCase()
       );
       return res.status(200).json({ message: "Deploy deleted" });
     } catch (err) {

@@ -1,86 +1,116 @@
 // src/services/auth.ts
-import { apiRequest, setTokens } from "./http"
 
 export type User = {
   id: string
   name: string
   email: string
-  username: string // lo derivamos del email
+  username: string
 }
 
-type LoginResponse = {
-  accessToken: string
-  refreshToken?: string
-  user: {
-    id: string
-    name: string
-    email: string
-  }
-}
+const BASE_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:3000";
 
-type SignupResponse = {
-  id: string
-  name: string
-  email: string
-}
-
-let currentUser: User | null = null
-
+// Login - POST /auth/login
 export async function login(email: string, password: string): Promise<User> {
-  const data = await apiRequest<LoginResponse>("/auth/login", {
+  const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify({ email, password }),
-  })
+  });
 
-  setTokens({
-    accessToken: data.accessToken,
-    refreshToken: data.refreshToken ?? null,
-  })
-
-  const username = data.user.email.split("@")[0]
-
-  currentUser = {
-    id: data.user.id,
-    name: data.user.name,
-    email: data.user.email,
-    username,
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Login failed');
   }
 
-  return currentUser
+  const result = await response.json();
+  
+  const username = result.user.email.split("@")[0];
+  return {
+    id: result.user.id,
+    name: result.user.name,
+    email: result.user.email,
+    username,
+  };
 }
 
+// Signup - POST /auth/signup
 export async function signup(name: string, email: string, password: string): Promise<User> {
-  const data = await apiRequest<SignupResponse>("/auth/signup", {
+  const response = await fetch(`${BASE_URL}/auth/signup`, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify({ name, email, password }),
-  })
+  });
 
-  // Opcion 1: volver al login
-  // Opcion 2 (aquí): auto login
-  return login(data.email, password)
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Signup failed');
+  }
+
+  const result = await response.json();
+  
+  const username = result.user.email.split("@")[0];
+  return {
+    id: result.user.id,
+    name: result.user.name,
+    email: result.user.email,
+    username,
+  };
 }
 
-export async function refresh(): Promise<void> {
-  await apiRequest<{ accessToken: string }>("/auth/refresh", { method: "POST" })
-  // si tu endpoint devuelve el token en el body, podrías hacer:
-  // setTokens({ accessToken: data.accessToken })
+// Verificar sesión - GET /auth/me
+export async function checkAuth(): Promise<User | null> {
+  try {
+    const response = await fetch(`${BASE_URL}/auth/me`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const result = await response.json();
+
+    if (!result.valid || !result.user) {
+      return null;
+    }
+
+    const username = result.user.email?.split("@")[0] || "user";
+    
+    return {
+      id: result.user.sub,
+      name: result.user.email, // El backend solo devuelve sub, email, role
+      email: result.user.email,
+      username,
+    };
+  } catch {
+    return null;
+  }
 }
 
+// Logout - POST /auth/logout
 export async function logout(): Promise<void> {
   try {
-    await apiRequest<void>("/auth/logout", { method: "POST" }, true)
-  } catch {
-    // si falla igual limpiamos
-  } finally {
-    setTokens({ accessToken: null })
-    currentUser = null
+    await fetch(`${BASE_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+  } catch (error) {
+    console.error('Logout error:', error);
   }
 }
 
-export function getCurrentUser(): User | null {
-  return currentUser
-}
-
-export function isAuthenticated(): boolean {
-  return !!currentUser
+// Refresh token - POST /auth/refresh
+export async function refreshToken(): Promise<boolean> {
+  try {
+    const response = await fetch(`${BASE_URL}/auth/refresh`, {
+      method: "POST",
+      credentials: "include",
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
 }

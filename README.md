@@ -28,12 +28,15 @@ Hosti es una plataforma web que permite desplegar proyectos desde repositorios d
 
 ### 1. Repositorios de Templates Dockerizados
 
-Los siguientes repositorios contienen los templates dockerizados funcionales utilizados por la plataforma:
+Estos son los templates listos para **"Use this template"** desde GitHub.  
+Cada uno incluye su **Dockerfile funcional**, respetando el estándar de despliegue de la plataforma.
 
-- [Template Repository 1](#) - *Agregar enlace al repositorio de templates*
-- [Template Repository 2](#) - *Agregar enlace al repositorio de templates*
+| Tipo de plantilla | Repositorio | Descripción |
+|------------------|-------------|-------------|
+| **React (Vite)** | https://github.com/Judithpc23/hosting-template-react | Template moderno para SPAs, dashboards e interfaces interactivas. |
+| **Flask (Python)** | https://github.com/Judithpc23/hosting-template-flask | Backend con Flask 5 listo para exponer APIs o vistas dinámicas. |
+| **Sitio estático** | https://github.com/Judithpc23/hosting-template-static | HTML/CSS/JS servido con Nginx. Ideal para landings, portafolios o documentación. |
 
-> **Nota**: Los enlaces a los repositorios de templates deben ser agregados por el equipo.
 
 ### 2. Video de Demostración en YouTube
 
@@ -376,11 +379,15 @@ Este proyecto fue desarrollado como parte de un trabajo académico. Para contrib
 
 Este proyecto es parte de un trabajo académico. Todos los derechos reservados.
 
-## 👥 Equipo
+## 👥 Integrantes del equipo
 
-- *Agregar nombres de los miembros del equipo*
+| Integrante | Rol | GitHub |
+|-----------|------|--------|
+| Esteban Dadul | Backend – Infraestructura – Docker, Compose, Proxy | [@usuario1](https://github.com/usuario1) |
+| Judith Pérez | Frontend, integración y templates | [@Judithpc23](https://github.com/Judithpc23) |
+| Carlos Arango | Frontend – Dashboard, UI/UX | [@usuario2](https://github.com/usuario2) |
+| Andres Monserrat| Integración fullstack, testing | [@usuario4](https://github.com/usuario4) |
+| Ivan Parra | Documentación, video y soporte de templates | [@usuario5](https://github.com/usuario5) |
 
 ---
-
-**Nota**: Este README debe ser actualizado con los enlaces reales a los repositorios de templates y al video de demostración antes de la entrega final.
 

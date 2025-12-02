@@ -9,7 +9,6 @@ export class DockerService {
     await exec(`docker rmi ${imageName}`);
   }
 
-  // TODO??: limite de CPU y memoria ajustable por template
   async runContainer(
     imageName: string,
     containerName: string,

@@ -5,7 +5,7 @@ import { appConfig } from "../shared/config/config.js";
 export class IdleContainerWorker {
   private static instance: IdleContainerWorker;
 
-  private readonly checkIntervalMs = appConfig.workerCheckIntervalS * 60 * 1000;
+  private readonly checkIntervalMs = appConfig.workerCheckIntervalS * 1000;
   private readonly idleThresholdMs =
     appConfig.workerInactivityThresholdS * 1000;
 

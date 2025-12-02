@@ -26,6 +26,18 @@ services:
     networks:
       - net
 
+  frontend:
+    build: ./frontend
+    container_name: hosti
+    ports:
+      - "5173:80"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    networks:
+      - net
+
 volumes:
   nginx-conf:
     driver: local

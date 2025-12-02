@@ -19,7 +19,7 @@ Hosti es una plataforma web que permite desplegar proyectos desde repositorios d
 
 - **Autenticación**: Integración con Roble para registro e inicio de sesión
 - **Despliegue Automático**: Clonado de repositorios desde GitHub y construcción automática de contenedores Docker
-- **Gestión de Recursos**: Límites configurables de CPU y memoria por contenedor (0.5 CPU, 250MB RAM por defecto)
+- **Gestión de Recursos**: Límites de CPU y memoria por contenedor (0.5 CPU, 250MB RAM por defecto)
 - **Apagado Automático**: Sistema de monitoreo que detiene contenedores inactivos después de un período de tiempo configurable
 - **Reverse Proxy**: Nginx como proxy inverso con configuración dinámica de subdominios
 - **Dashboard Intuitivo**: Interfaz web moderna y responsive para gestionar proyectos
@@ -45,7 +45,7 @@ Cada uno incluye su **Dockerfile funcional**, respetando el estándar de desplie
 El video de demostración incluye:
 - **Registro e inicio de sesión**: Proceso completo de autenticación con Roble
 - **Creación y despliegue de un proyecto**: Flujo completo desde la selección de template hasta el despliegue
-- **Funcionamiento de la gestión de recursos y apagado automático**: Demostración del sistema de monitoreo y apagado de contenedores inactivos
+- **La gestión de recursos y apagado automático**: Demostración del sistema de monitoreo y apagado de contenedores inactivos
 
 
 ## 🏗️ Arquitectura y Componentes

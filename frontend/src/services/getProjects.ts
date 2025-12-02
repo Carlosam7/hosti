@@ -5,7 +5,7 @@ async function getProjects (): Promise<Project[]> {
     const res: {deployments: Project[]} = await apiRequest(`/deploy/user/deployments`, {
         method: 'GET',
     })
-    console.log("JNSJHSIH", res)
+
     return res.deployments
 }
 

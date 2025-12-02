@@ -14,11 +14,11 @@ function ViewProjects ({ loading, listProject } : { loading: boolean, listProjec
         const tamaño = w/4
         if (tamaño < 320) {
             setAncho("grid grid-cols-2")
-            console.log('Este es el tamaño: ', tamaño)
+        
         } else {
             setAncho("grid grid-cols-3")
         }
-        console.log(w/4)
+        
     }, [w])
 
 

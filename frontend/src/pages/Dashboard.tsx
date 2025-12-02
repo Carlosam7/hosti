@@ -7,7 +7,7 @@ function Dashboard () {
 
 
     // bg-[url("assets/backgrounds/SL-120722-54440-04.jpg")] bg-cover bg-center
-    console.log(window.innerWidth)
+    
     if (width > 1024) {
         return (
             <DashboardDesktop/>

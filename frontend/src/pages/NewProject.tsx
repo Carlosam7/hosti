@@ -1,51 +1,51 @@
 import { useEffect, useMemo, useState, type JSX } from "react"
-import { createDeployment } from "../services/deploy" 
+import { createDeployment } from "../services/deploy"
 import { Link } from "react-router-dom"
 
 type Step = 1 | 2 | 3
 
 type Template = {
-    id: string
-    name: string
-    description: string
-    repoTemplateUrl: string
-    slug: string
-    icon: JSX.Element
-    accent: string
-    iconBg: string
+  id: string
+  name: string
+  description: string
+  repoTemplateUrl: string
+  slug: string
+  icon: JSX.Element
+  accent: string
+  iconBg: string
 }
 
 const TEMPLATES: Template[] = [
-    {
-        id: "static-site",
-        name: "Sitio Estático",
-        description: "Sitio HTML/CSS/JS ideal para landings, portafolios y documentación.",
-        repoTemplateUrl: "https://github.com/Judithpc23/hosting-template-static",
-        slug: "static",
-        icon: <span className="text-xl">🌐</span>,
-        accent: "emerald",
-        iconBg: "bg-emerald-100 text-emerald-600"
-    },
-    {
-        id: "react",
-        name: "React (Vite)",
-        description: "Aplicación React moderna con Vite y HMR, optimizada para rendimiento.",
-        repoTemplateUrl: "https://github.com/Judithpc23/hosting-template-react",
-        slug: "react",
-        icon: <span className="text-xl">⚛️</span>,
-        accent: "indigo",
-        iconBg: "bg-indigo-100 text-indigo-600"
-    },
-    {
-        id: "flask",
-        name: "Flask API",
-        description: "Backend Flask listo para APIs REST y lógica en el servidor.",
-        repoTemplateUrl: "https://github.com/Edadul/hosti-template-flask",
-        slug: "flask",
-        icon: <span className="text-xl">🐍</span>,
-        accent: "cyan",
-        iconBg: "bg-cyan-100 text-cyan-600"
-    },
+  {
+    id: "static-site",
+    name: "Sitio Estático",
+    description: "Sitio HTML/CSS/JS ideal para landings, portafolios y documentación.",
+    repoTemplateUrl: "https://github.com/Judithpc23/hosting-template-static",
+    slug: "static",
+    icon: <span className="text-xl">🌐</span>,
+    accent: "emerald",
+    iconBg: "bg-emerald-100 text-emerald-600"
+  },
+  {
+    id: "react",
+    name: "React (Vite)",
+    description: "Aplicación React moderna con Vite y HMR, optimizada para rendimiento.",
+    repoTemplateUrl: "https://github.com/Judithpc23/hosting-template-react",
+    slug: "react",
+    icon: <span className="text-xl">⚛️</span>,
+    accent: "indigo",
+    iconBg: "bg-indigo-100 text-indigo-600"
+  },
+  {
+    id: "flask",
+    name: "Flask API",
+    description: "Backend Flask listo para APIs REST y lógica en el servidor.",
+    repoTemplateUrl: "https://github.com/Edadul/hosti-template-flask",
+    slug: "flask",
+    icon: <span className="text-xl">🐍</span>,
+    accent: "cyan",
+    iconBg: "bg-cyan-100 text-cyan-600"
+  },
 ]
 
 
@@ -81,48 +81,48 @@ export default function NewProject() {
   const canSubmit = projectName.trim() !== "" && repoUrl.trim() !== "" && !projectError && !repoError
 
   const selectedTemplate = useMemo(
-      () => TEMPLATES.find((t) => t.id === selectedTemplateId) ?? null,
-      [selectedTemplateId]
+    () => TEMPLATES.find((t) => t.id === selectedTemplateId) ?? null,
+    [selectedTemplateId]
   )
 
   const canProceedStep1 = selectedTemplateId !== null
 
   const handleNext = () => {
-      if (step < 3) setStep((step + 1) as Step)
+    if (step < 3) setStep((step + 1) as Step)
   }
 
   const handleBack = () => {
-      if (step > 1) setStep((step - 1) as Step)
+    if (step > 1) setStep((step - 1) as Step)
   }
 
   const handleSubmit = async () => {
-      if (!selectedTemplateId || !projectName || !repoUrl) return
+    if (!selectedTemplateId || !projectName || !repoUrl) return
 
-      setIsCreating(true)
-      setError(null)
+    setIsCreating(true)
+    setError(null)
 
-      try {
-          const deployment = await createDeployment(
-            {
-              repoUrl: repoUrl.trim(),
-              subdomain: projectName.trim(),
-              description: selectedTemplate?.description ?? "",
-              templateId: selectedTemplateId,
-            }
-          )
-console.log(deployment.subdomain)
-          window.location.assign(`/dashboard`)
-      } catch (err) {
-          const message =
-              err instanceof Error ? err.message : "Error al crear el proyecto. Inténtalo de nuevo."
-          setError(message)
-      } finally {
-          setIsCreating(false)
-      }
+    try {
+      const deployment = await createDeployment(
+        {
+          repoUrl: repoUrl.trim(),
+          subdomain: projectName.trim(),
+          description: selectedTemplate?.description ?? "",
+          templateId: selectedTemplateId,
+        }
+      )
+      console.log(deployment.subdomain)
+      window.location.assign(`/dashboard`)
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Error al crear el proyecto. Inténtalo de nuevo."
+      setError(message)
+    } finally {
+      setIsCreating(false)
+    }
   }
 
   useEffect(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" })
+    window.scrollTo({ top: 0, behavior: "smooth" })
   }, [step])
 
   return (
@@ -149,13 +149,12 @@ console.log(deployment.subdomain)
             {[1, 2, 3].map((s) => (
               <div key={s} className="flex items-center">
                 <div
-                  className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition ${
-                    s < step
+                  className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition ${s < step
                       ? "border-[#2dd4cf] bg-linear-to-tr from-[#3de6c9] to-[#2dd4cf] text-white shadow-sm"
                       : s === step
-                          ? "border-[#2dd4cf] bg-[#2dd4cf22] text-[#008781]"
-                          : "border-gray-200 bg-white text-gray-400"
-                  }`}
+                        ? "border-[#2dd4cf] bg-[#2dd4cf22] text-[#008781]"
+                        : "border-gray-200 bg-white text-gray-400"
+                    }`}
                 >
                   {s < step ? "✓" : s}
                 </div>
@@ -190,8 +189,8 @@ console.log(deployment.subdomain)
                         className={[
                           "absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full border text-xs font-medium",
                           selected
-                              ? "border-[#2dd4cf] bg-[#2dd4cf] text-white"
-                              : "border-gray-300 bg-gray-100 text-gray-400"
+                            ? "border-[#2dd4cf] bg-[#2dd4cf] text-white"
+                            : "border-gray-300 bg-gray-100 text-gray-400"
                         ].join(" ")}
                       >
                         {selected ? "✓" : ""}
@@ -212,8 +211,8 @@ console.log(deployment.subdomain)
                           className={[
                             "flex items-center justify-center w-full gap-2 rounded-lg border text-xs font-medium py-2",
                             selected
-                                ? "border-[#2dd4cf] bg-[#dff7f5] text-[#046a67] hover:bg-[#c9f0ed]"
-                                : "border-gray-300 hover:border-[#2dd4cf] hover:bg-[#f1fbfa] text-gray-700"
+                              ? "border-[#2dd4cf] bg-[#dff7f5] text-[#046a67] hover:bg-[#c9f0ed]"
+                              : "border-gray-300 hover:border-[#2dd4cf] hover:bg-[#f1fbfa] text-gray-700"
                           ].join(" ")}
                         >
                           <span className="text-[13px]">Ver plantilla</span>
@@ -257,7 +256,7 @@ console.log(deployment.subdomain)
                   </div>
 
                   <ol className="space-y-5">
-                    {[1,2,3,4].map((n, idx) => (
+                    {[1, 2, 3, 4].map((n, idx) => (
                       <li key={n} className="flex gap-4 items-start">
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-linear-to-tr from-[#3de6c9] to-[#2dd4cf] text-white text-sm font-medium">
                           {n}

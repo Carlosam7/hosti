@@ -43,7 +43,7 @@ function DashboardDesktop () {
 
                     <section className="grid grid-cols-4 gap-3 w-full">
                         <CardWelcome/>
-                        <CardDashboard titulo={"Total de proyectos"} value={"1"}/>
+                        <CardDashboard titulo={"Total de proyectos"} value={listProject.length}/>
                         <CardDashboard titulo={"Template más usado"} value={"1"}/>
                         <CardDashboard titulo={"Último proyecto"} value={"1"}/>
                     </section>

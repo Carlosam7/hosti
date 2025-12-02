@@ -15,7 +15,7 @@ function CardProject ({ project }: { project: Project }) {
                             <p className="text-[12px]">Templeate: templeate 1</p>
                         </div>
                         <div className="flex h-min rounded-full bg-[#3ab8b0] px-4 py-1 text-white">
-                            <p> Active </p>
+                            <p> {project.active ? ('Active') : 'Inactive'} </p>
                         </div>
                     </section>
 

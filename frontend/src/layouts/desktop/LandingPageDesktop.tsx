@@ -11,7 +11,9 @@ function LandingPageDesktop () {
             <section className={`relative flex flex-col justify-center items-center w-full h-screen gap-28`}>
                 {/* <div className="absolute bottom-0 rounded-t-full w-full h-full bg-white shadow-t-2xl shadow-[#00c066]">
                 </div> */}
-                <img src="#" alt="logo" />
+                <div className="flex justify-center items-end pt-5 px-5">
+                    <img src="logo/hosti-icono.png" alt="logo" width={90}/>
+                </div>
                 <div className="flex flex-col w-full justify-center items-center text-5xl px-5 font-bold text-center">
                     <div className="flex items-center gap-2 px-5 py-3 mb-10 font-medium text-[15px] text-[#008781] rounded-full bg-[#2dd4cf20] hover:border hover:border-[#008781]">
                         <BsLightningCharge/>
@@ -113,9 +115,9 @@ function LandingPageDesktop () {
             </section>
 
             <footer className="flex flex-col justify-center items-center w-full border-t border-gray-100 h-[200px] gap-5">
-                <img src="#" alt="Logo" />
+                <img src="logo/hosti-icono.png" alt="logo" width={50}/>
                 <div className="text-center w-full">
-                    <p> Platform hosting. </p>
+                    <p className="font-black"> Platform hosting. </p>
                     <p> Manage your project with templates from Github </p>
                     <p>© 2025 ProjectHosti</p>
                 </div>

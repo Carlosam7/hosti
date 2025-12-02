@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState, type JSX } from "react"
 import { createDeployment } from "../services/deploy"
+import { useAuth } from "../context/AuthContext"
+import { Link } from "react-router-dom"
 
 type Step = 1 | 2 | 3
 
@@ -70,7 +72,7 @@ export default function NewProject() {
   const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
 
   // Validaciones
   const PROJECT_RE = /^(?!-)(?!.*--)[a-z0-9-]{3,32}(?<!-)$/ // minúsculas, números y -, sin guiones al inicio/fin ni dobles
@@ -122,8 +124,8 @@ export default function NewProject() {
               templateId: selectedTemplateId,
             }
           )
-
-          window.location.assign(deployment.publicUrl)
+console.log(deployment.subdomain)
+          window.location.assign(`/dashboard`)
       } catch (err) {
           const message =
               err instanceof Error ? err.message : "Error al crear el proyecto. Inténtalo de nuevo."
@@ -143,9 +145,11 @@ export default function NewProject() {
       <section className="relative w-full pt-8 pb-4">
         <h1 className="mt-4 text-2xl md:text-4xl font-bold text-center text-gray-900">
           Crea tu proyecto con
-          <span className="ml-2 px-3 md:px-5 rounded-xl text-white bg-linear-to-tr from-[#3de6c9] to-[#2dd4cf]">
-            Hosti
-          </span>
+          <Link to={'/'}>
+            <span className="ml-2 px-3 md:px-5 rounded-xl text-white bg-linear-to-tr from-[#3de6c9] to-[#2dd4cf]">
+              Hosti
+            </span>
+          </Link>
         </h1>
         <p className="mt-2 text-sm md:text-base text-gray-600 text-center">
           Selecciona una plantilla, conecta tu repositorio y despliega automáticamente.
@@ -241,7 +245,10 @@ export default function NewProject() {
                 })}
               </div>
 
-              <div className="mt-6 flex justify-end">
+              <div className="mt-6 flex justify-between">
+                <Link to={'/dashboard'}>
+                  <button onClick={handleBack} disabled={isCreating} className="btn btn-outline rounded-xl">← Atrás</button>
+                </Link>
                 <button
                   onClick={handleNext}
                   disabled={!canProceedStep1}
@@ -382,7 +389,7 @@ export default function NewProject() {
                 <button
                   onClick={handleSubmit}
                   disabled={!canSubmit || isCreating}
-                  className={`btn btn-primary h-[42px] w-[180px] rounded-xl ${!canSubmit || isCreating ? "opacity-60 cursor-not-allowed" : ""}`}
+                  className={`flex justify-center gap-x-4 items-center btn-primary h-[42px] w-[180px] rounded-xl ${!canSubmit || isCreating ? "opacity-60 cursor-not-allowed" : ""}`}
                 >
                   {isCreating ? (
                     <>

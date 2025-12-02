@@ -7,7 +7,7 @@ export class IdleContainerWorker {
 
   private readonly checkIntervalMs = appConfig.workerCheckIntervalS * 60 * 1000;
   private readonly idleThresholdMs =
-    appConfig.workerInactivityThresholdS * 60 * 1000;
+    appConfig.workerInactivityThresholdS * 1000;
 
   private constructor(
     private readonly sqlite = SqliteDBService.getInstance(),

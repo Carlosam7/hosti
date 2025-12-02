@@ -8,7 +8,12 @@ function Navbar () {
             <nav className="fixed z-10 flex justify-center items-center w-full h-[70px] bg-white shadow-md px-20">
                 <div className="flex justify-between items-center container h-full">
                     <section>
-                        <img src="#" alt="Logo" />
+                        <Link to={'/'}>
+                            <button className="cursor-pointer flex justify-center items-center box-border overflow-hidden">
+                                <img src="logo/hosti-sin-fondo.png" alt="logo" width={140}/>
+                            </button>
+                        </Link>
+                        
                     </section>
 
                     <section>

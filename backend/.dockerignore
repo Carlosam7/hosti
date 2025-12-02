@@ -6,6 +6,8 @@ Dockerfile
 docker-compose.yml
 .env
 .env.*
+app.db
+*.db
 npm-debug.log
 *.log
 coverage

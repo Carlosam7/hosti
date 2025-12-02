@@ -7,6 +7,7 @@ Hosti es una plataforma web que permite desplegar proyectos desde repositorios d
 - [Características](#-características)
 - [Enlaces Requeridos](#-enlaces-requeridos)
 - [Arquitectura y Componentes](#-arquitectura-y-componentes)
+- [Informe Técnico Detallado](#-informe-técnico-detallado)
 - [Tecnologías Utilizadas](#-tecnologías-utilizadas)
 - [Instalación](#-instalación)
 - [Configuración](#-configuración)
@@ -190,6 +191,18 @@ El backend está estructurado en módulos siguiendo el patrón de arquitectura p
   - Contenedores inactivos se detienen automáticamente
   - Los contenedores se reactivan bajo demanda cuando se accede a su subdominio
   - Monitoreo continuo del tiempo de inactividad
+ 
+## 📄 Informe Técnico Detallado
+
+Para una descripción más extensa del sistema, puedes consultar el documento técnico:
+
+- **Informe técnico**: [`Informe tecnico.md`](Informe%20tecnico.md)
+
+En este documento se detalla:
+- **Descripción de la arquitectura y componentes** (frontend, backend, Nginx, base de datos y Docker).
+- **Flujo de trabajo del sistema** (autenticación, creación y despliegue de proyectos, acceso y apagado automático).
+- **Estrategia de seguridad y optimización de recursos** (autenticación, CORS, aislamiento lógico, límites de CPU/Memoria, apagado automático, etc.).
+
 
 ## 🛠️ Tecnologías Utilizadas
 

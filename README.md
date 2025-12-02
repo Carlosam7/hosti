@@ -35,7 +35,7 @@ Cada uno incluye su **Dockerfile funcional**, respetando el estándar de desplie
 | Tipo de plantilla | Repositorio | Descripción |
 |------------------|-------------|-------------|
 | **React (Vite)** | https://github.com/Judithpc23/hosting-template-react | Template moderno para SPAs, dashboards e interfaces interactivas. |
-| **Flask (Python)** | https://github.com/Judithpc23/hosting-template-flask | Backend con Flask 5 listo para exponer APIs o vistas dinámicas. |
+| **Flask (Python)** | https://github.com/Edadul/hosti-template-flask | Backend con Flask 5 listo para exponer APIs o vistas dinámicas. |
 | **Sitio estático** | https://github.com/Judithpc23/hosting-template-static | HTML/CSS/JS servido con Nginx. Ideal para landings, portafolios o documentación. |
 
 

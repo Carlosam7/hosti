@@ -41,7 +41,7 @@ Cada uno incluye su **Dockerfile funcional**, respetando el estándar de desplie
 
 ### 2. Video de Demostración en YouTube
 
-[🔗 Ver Video de Demostración](#) - *Agregar enlace al video de YouTube*
+[🔗 Ver Video de Demostración](#) - (Pendiente)
 
 El video de demostración incluye:
 - **Registro e inicio de sesión**: Proceso completo de autenticación con Roble

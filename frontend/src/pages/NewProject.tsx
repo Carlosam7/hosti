@@ -41,7 +41,7 @@ const TEMPLATES: Template[] = [
         id: "flask",
         name: "Flask API",
         description: "Backend Flask listo para APIs REST y lógica en el servidor.",
-        repoTemplateUrl: "https://github.com/Judithpc23/hosting-template-flask",
+        repoTemplateUrl: "https://github.com/Edadul/hosti-template-flask",
         slug: "flask",
         icon: <span className="text-xl">🐍</span>,
         accent: "cyan",

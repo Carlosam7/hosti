@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
 import ProtectedRoute from './ProtectedRoute';
 import PublicRoute from './PublicRoute';
 import Navbar from '../components/navbar';
@@ -12,14 +11,6 @@ import NewProject from '../pages/NewProject';
 // Lazy loading de páginas
 
 
-// Spinner mientras carga
-function LoadingSpinner() {
-    return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
-        </div>
-    );
-}
 
 export default function AppRoutes() {
     const location = useLocation();

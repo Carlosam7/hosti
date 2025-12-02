@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState, type JSX } from "react"
-import { createDeployment } from "../services/deploy"
-import { useAuth } from "../context/AuthContext"
+import { createDeployment } from "../services/deploy" 
 import { Link } from "react-router-dom"
 
 type Step = 1 | 2 | 3
@@ -51,18 +50,6 @@ const TEMPLATES: Template[] = [
 
 
 // Reemplaza esto con datos reales de usuario cuando añadas auth
-const mockUser = { username: "usuario" }
-
-const getApiBaseUrl = () => {
-    const base = import.meta.env.VITE_API_URL?.trim()
-    if (base) {
-        return base.replace(/\/$/, "")
-    }
-    if (typeof window !== "undefined") {
-        return window.location.origin.replace(/\/$/, "")
-    }
-    return ""
-}
 
 export default function NewProject() {
   const [step, setStep] = useState<Step>(1)
@@ -72,7 +59,6 @@ export default function NewProject() {
   const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const { user } = useAuth();
 
   // Validaciones
   const PROJECT_RE = /^(?!-)(?!.*--)[a-z0-9-]{3,32}(?<!-)$/ // minúsculas, números y -, sin guiones al inicio/fin ni dobles

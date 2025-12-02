@@ -7,7 +7,7 @@ export type User = {
   username: string
 }
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:3000";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL
 
 // Login - POST /auth/login
 export async function login(email: string, password: string): Promise<User> {

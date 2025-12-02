@@ -10,7 +10,12 @@ function CardDashboard ({ titulo, value }: { titulo: string, value: any } ) {
                         <p className="text-3xl font-bold">{value}</p>
                     </div>
                     <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-white opacity-[0.3]">
-                        <img src="#" alt="Logo" />
+                        <img
+                          src={`${import.meta.env.BASE_URL}logo/hosti-icono.png`} // o "/logo/hosti-icono.png"
+                          alt="Hosti logo"
+                          className="w-6 h-6"
+                          loading="lazy"
+                        />
                     </div>
                 </section>
             </div>

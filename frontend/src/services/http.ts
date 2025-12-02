@@ -12,6 +12,18 @@ export function getAccessToken() {
   return accessToken
 }
 
+// let accessToken: string | null = null
+// let refreshToken: string | null = null
+
+// export function setTokens(tokens: { accessToken: string | null; refreshToken?: string | null }) {
+//   accessToken = tokens.accessToken
+//   refreshToken = tokens.refreshToken ?? null
+// }
+
+// export function getAccessToken() {
+//   return accessToken
+// }
+
 async function rawRequest(path: string, options: RequestInit = {}): Promise<Response> {
   const res = await fetch(`http://localhost:3000/${path}`, {
     ...options,
@@ -20,6 +32,7 @@ async function rawRequest(path: string, options: RequestInit = {}): Promise<Resp
   return res
 }
 
+<<<<<<< HEAD
 export async function apiRequest<T>(
   path: string,
   options: RequestInit = {},
@@ -29,13 +42,26 @@ export async function apiRequest<T>(
     "Content-Type": "application/json",
     ...(options.headers || {}),
   }
+=======
+export async function apiRequest<T>( path: string, options: RequestInit = {} ): Promise<T> {
+  
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+>>>>>>> c3ed765d35e3bfbbb3944b3fdcfb05e6ac11bbce
 
   // normalize to a Headers instance so we can safely set values
   const headerObj = new Headers(headers)
 
+<<<<<<< HEAD
   if (requireAuth && accessToken) {
     headerObj.set("Authorization", `Bearer ${accessToken}`)
   }
+=======
+  // if (requireAuth && accessToken) {
+  //   headerObj.set("Authorization", `Bearer ${accessToken}`)
+  // }
+>>>>>>> c3ed765d35e3bfbbb3944b3fdcfb05e6ac11bbce
 
   const res = await rawRequest(path, { ...options, headers: headerObj })
 

@@ -5,3 +5,4 @@ dist
 tmp/repositories/*
 REST*.http
 *.dev
+*.db

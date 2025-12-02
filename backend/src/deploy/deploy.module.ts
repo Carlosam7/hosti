@@ -23,6 +23,7 @@ export class DeployModule {
 
     this.rollbackService = new DeployRollbackService(
       robleDBService,
+      sqliteDBService,
       reverseProxyService,
       dockerService,
       gitService
@@ -37,7 +38,7 @@ export class DeployModule {
       this.rollbackService
     );
 
-    this.controller = new DeployController(this.deployManager);
+    this.controller = new DeployController(this.deployManager, sqliteDBService);
   }
 
   static getInstance(): DeployModule {

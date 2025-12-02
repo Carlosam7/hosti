@@ -58,6 +58,8 @@ export default function NewProject() {
   const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const [user, setUser] = useState(null);
+
   // Validaciones
   const PROJECT_RE = /^(?!-)(?!.*--)[a-z0-9-]{3,32}(?<!-)$/ // minúsculas, números y -, sin guiones al inicio/fin ni dobles
   const GITHUB_URL_RE = /^https:\/\/github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\.git)?$/
@@ -99,6 +101,7 @@ export default function NewProject() {
     setIsCreating(true)
     setError(null)
 
+<<<<<<< HEAD
     try {
       const deployment = await createDeployment({
         repoUrl: repoUrl.trim(),
@@ -106,6 +109,17 @@ export default function NewProject() {
         description: selectedTemplate?.description ?? "",
         templateId: selectedTemplateId,
       })
+=======
+      try {
+          const deployment = await createDeployment(
+            {
+              repoUrl: repoUrl.trim(),
+              subdomain: projectName.trim(),
+              description: selectedTemplate?.description ?? "",
+              templateId: selectedTemplateId,
+            }
+          )
+>>>>>>> c3ed765d35e3bfbbb3944b3fdcfb05e6ac11bbce
 
       window.location.assign(deployment.publicUrl)
     } catch (err) {
@@ -122,7 +136,38 @@ export default function NewProject() {
   }, [step])
 
   return (
+<<<<<<< HEAD
     <>
+=======
+    <div className="w-full pt-[70px] h-[calc(100vh-70px)] bg-[#f8f8f8] overflow-hidden">
+      {/* Hero con gradiente igual al dashboard */}
+      <section className="relative flex flex-col items-center w-full pt-8 pb-4">
+        <h1 className="mt-4 text-2xl md:text-4xl font-bold text-center text-gray-900">
+          Crea tu proyecto con
+          <span className="ml-2 px-3 md:px-5 rounded-xl text-white bg-linear-to-tr from-[#3de6c9] to-[#2dd4cf]">
+            Hosti
+          </span>
+        </h1>
+        <button onClick={async() => {
+          const res = await fetch('http://localhost:3000/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email: "carlosarango1107@outlook.com", password: "Pass@1234"}),
+            credentials: 'include'
+          })
+          const data = await res.json()
+          setUser(data)
+          console.log(data)
+        }}>
+          Iniciar sesión
+        </button>
+        <p className="mt-2 text-sm md:text-base text-gray-600 text-center">
+          Selecciona una plantilla, conecta tu repositorio y despliega automáticamente.
+        </p>
+      </section>
+>>>>>>> c3ed765d35e3bfbbb3944b3fdcfb05e6ac11bbce
 
       <div className="relative flex flex-col justify-center items-center w-full h-screen bg-background">
         <div className="w-full  absolute top-0 left-0">
@@ -143,6 +188,7 @@ export default function NewProject() {
             </p>
           </section>
 
+<<<<<<< HEAD
           <main className="mx-auto max-w-6xl px-6 pb-4 h-[calc(100%-140px)]">
             {/* Stepper con acento turquesa */}
             <div className="mb-8 flex flex-col items-center">
@@ -156,6 +202,19 @@ export default function NewProject() {
                             ? "border-[#2dd4cf] bg-[#2dd4cf22] text-[#008781]"
                             : "border-gray-200 bg-white text-gray-400"
                         }`}
+=======
+              <div className="grid gap-6 md:grid-cols-3">
+                {TEMPLATES.map((t) => {
+                  const selected = selectedTemplateId === t.id
+                  return (
+                    <div
+                      key={t.id}
+                      onClick={() => setSelectedTemplateId(t.id)}
+                      className={[
+                        "group relative flex flex-col text-left rounded-2xl p-5 transition shadow-sm",
+                        selected ? "border-2 border-[#2dd4cf] bg-[#eafaf9]" : "border border-gray-200 bg-white hover:shadow-md"
+                      ].join(" ")}
+>>>>>>> c3ed765d35e3bfbbb3944b3fdcfb05e6ac11bbce
                     >
                       {s < step ? "✓" : s}
                     </div>
@@ -186,6 +245,7 @@ export default function NewProject() {
                             selected ? "border-2 border-[#2dd4cf] bg-[#eafaf9]" : "border border-gray-200 bg-white hover:shadow-md"
                           ].join(" ")}
                         >
+<<<<<<< HEAD
                           <span
                             className={[
                               "absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full border text-xs font-medium",
@@ -239,6 +299,43 @@ export default function NewProject() {
                     >
                       Continuar →
                     </button>
+=======
+                          <span className="text-[13px]">Ver plantilla</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            className={`h-4 w-4 ${selected ? "text-[#046a67]" : "text-gray-700"}`}
+                            fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            <path d="M15 3h6v6" />
+                            <path d="M10 14 21 3" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={handleNext}
+                  disabled={!canProceedStep1}
+                  className={`btn btn-primary h-[42px] w-[160px] rounded-xl ${!canProceedStep1 ? "opacity-60 cursor-not-allowed" : ""}`}
+                >
+                  Continuar →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Paso 2: card con borde turquesa como dashboard */}
+          {step === 2 && (
+            <div>
+              <div className="rounded-2xl border border-[#2dd4cf] bg-white shadow-sm">
+                <div className="p-5">
+                  <div className="mb-3">
+                    <div className="text-lg font-semibold text-gray-900">Configura tu repositorio</div>
+                    <div className="text-sm text-gray-600">Sigue estos pasos para crear tu repositorio a partir de la plantilla</div>
+>>>>>>> c3ed765d35e3bfbbb3944b3fdcfb05e6ac11bbce
                   </div>
                 </div>
               )}

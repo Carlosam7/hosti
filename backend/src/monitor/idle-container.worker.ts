@@ -1,11 +1,13 @@
 import { SqliteDBService } from "../db/sqlite.db.service.js";
 import { DeployModule } from "../deploy/deploy.module.js";
+import { appConfig } from "../shared/config/config.js";
 
 export class IdleContainerWorker {
   private static instance: IdleContainerWorker;
 
-  private readonly checkIntervalMs = 15 * 1000;
-  private readonly idleThresholdMs = 30 * 1000;
+  private readonly checkIntervalMs = appConfig.workerCheckIntervalS * 60 * 1000;
+  private readonly idleThresholdMs =
+    appConfig.workerInactivityThresholdS * 60 * 1000;
 
   private constructor(
     private readonly sqlite = SqliteDBService.getInstance(),

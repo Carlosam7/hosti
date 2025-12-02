@@ -2,9 +2,13 @@ import { DeployManagerService } from "./deploy.manager.service.js";
 import { BadRequestException } from "../shared/exceptions/http.exception.js";
 import type { NextFunction, Request, Response } from "express";
 import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
+import type { SqliteDBService } from "../db/sqlite.db.service.js";
 
 export class DeployController {
-  constructor(private readonly deployManager: DeployManagerService) {}
+  constructor(
+    private readonly deployManager: DeployManagerService,
+    private readonly sqliteDBService: SqliteDBService
+  ) {}
 
   deploy = async (req: Request, res: Response, next: NextFunction) => {
     const { accessToken } = req.cookies;
@@ -38,7 +42,7 @@ export class DeployController {
       await this.deployManager.deleteDeploy(
         accessToken,
         projectName,
-        user!.name
+        user!.name.toLowerCase()
       );
       return res.status(200).json({ message: "Deploy deleted" });
     } catch (err) {
@@ -49,13 +53,29 @@ export class DeployController {
   notifyAccess = async (req: Request, res: Response, next: NextFunction) => {
     // a este endpoint solo se accede internamente desde nginx
     // por lo que no es necesario autenticar al usuario
-    // solo se necesita el parametro project que es el subdominio
     const { project } = req.params;
     if (!project) throw new BadRequestException("Missing param 'project'");
 
     try {
       await this.deployManager.notifyAccess(project);
       return res.sendStatus(204);
+    } catch (err) {
+      return next(err);
+    }
+  };
+
+  getDeploymentsByUserId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const user = req.user;
+
+    try {
+      const deployments = await this.sqliteDBService.findDeploymentByUserId(
+        user!.uid
+      );
+      return res.status(200).json({ deployments });
     } catch (err) {
       return next(err);
     }

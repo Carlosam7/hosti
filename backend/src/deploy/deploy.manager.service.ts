@@ -6,7 +6,7 @@ import {
   ConflictException,
 } from "../shared/exceptions/http.exception.js";
 import { ReverseProxyService } from "../services/reverseProxy.service.js";
-import { config } from "../shared/config/config.js";
+import { appConfig } from "../shared/config/config.js";
 import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
 import type { IUser } from "../auth/auth.types.js";
 import type { DeployRollbackService } from "./deploy-rollback.service.js";
@@ -57,13 +57,13 @@ export class DeployManagerService {
       await this.dockerService.runContainer(
         projectName,
         projectName,
-        config.nginxPort
+        appConfig.nginxPort
       );
       deploymentState.containerRunning = true;
 
       await this.reverseProxyService.createSubdomainConfig(
         projectName,
-        config.nginxPort
+        appConfig.nginxPort
       );
       await this.reverseProxyService.reloadProxy();
       deploymentState.proxyConfigured = true;
@@ -76,12 +76,12 @@ export class DeployManagerService {
         dto?.description ?? "",
         new Date().toISOString()
       );
-      deploymentState.dbRecordCreated = true;
       await this.sqliteDBService.saveDeploymentData(user!.uid, {
         repoUrl: dto.repoUrl,
         subdomain: projectName,
         description: dto?.description,
       });
+      deploymentState.dbRecordCreated = true;
 
       await this.gitService.cleanupRepository(repoPath);
 
@@ -108,16 +108,18 @@ export class DeployManagerService {
         `Container ${containerName} does not exist`
       );
     }
+    const isRunning = await this.dockerService.checkIfRunning(containerName);
+    if (isRunning) {
+      await this.reverseProxyService.removeSubdomainConfig(containerName);
+      await this.dockerService.stopContainer(containerName);
+    }
     await this.dockerService.removeContainer(containerName);
     await this.dockerService.removeImage(containerName);
     await this.robleDBService.deleteDeploymentData(accessToken, containerName);
     await this.sqliteDBService.deleteDeploymentData(containerName);
-    await this.reverseProxyService.removeSubdomainConfig(containerName);
+    await this.reverseProxyService.reloadProxy();
   }
 
-  // TODO: agreagar metodo para congelar deploys (para no consumir recursos)
-  // esto implica detener el contenedor y actualizar la base de datos
-  // como sabemos cuanto tiempo ha estado sin usarse un contenedor? nadie sabe jaja
   async notifyAccess(projectName: string) {
     await this.sqliteDBService.notifyAccess(projectName);
   }
@@ -134,7 +136,7 @@ export class DeployManagerService {
     await this.sqliteDBService.updateActiveStatus(projectName, true);
     await this.reverseProxyService.createSubdomainConfig(
       projectName,
-      config.nginxPort
+      appConfig.nginxPort
     );
     await this.reverseProxyService.reloadProxy();
   }

@@ -24,6 +24,10 @@ export class SqliteDBService {
     return this.deployRepository.findUnique(subdomain);
   }
 
+  async findDeploymentByUserId(userId: string) {
+    return this.deployRepository.findByUserId(userId);
+  }
+
   async getAllDeployments() {
     return await this.deployRepository.getAllDeployments();
   }

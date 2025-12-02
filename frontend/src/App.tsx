@@ -7,6 +7,7 @@ import NewProject from './pages/NewProject.tsx';
 
 function App() {
   return (
+<<<<<<< HEAD
     <BrowserRouter>
       <AuthProvider>
         <div className="flex flex-col bg-white">
@@ -21,3 +22,17 @@ function App() {
 }
 
 export default App;
+=======
+    <>
+    <div className='flex justify-center w-full min-w-[350px]'>
+      <Navbar/>
+      {/* <Dashboard/> */}
+      <LandingPage/>
+      {/* <NewProject/> */}
+    </div>
+    </>
+  )
+}
+
+export default App
+>>>>>>> c3ed765d35e3bfbbb3944b3fdcfb05e6ac11bbce

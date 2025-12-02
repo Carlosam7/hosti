@@ -5,12 +5,14 @@ import cors from "cors";
 import { appConfig, corsOptions } from "./shared/config/config.js";
 import { errorMiddleware } from "./shared/middlewares/error.middleware.js";
 import { IdleContainerWorker } from "./monitor/idle-container.worker.js";
+import { rateLimit } from "./monitor/rate-limit.middleware.js";
 
 const app = express();
 const PORT = appConfig.port;
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
+app.use(rateLimit);
 app.use(routes);
 app.use(errorMiddleware);
 IdleContainerWorker.getInstance().start();

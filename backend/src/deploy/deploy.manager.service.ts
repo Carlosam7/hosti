@@ -11,6 +11,7 @@ import type { CreateDeployDto } from "./dto/create-deploy.dto.js";
 import type { IUser } from "../auth/auth.types.js";
 import type { DeployRollbackService } from "./deploy-rollback.service.js";
 import type { SqliteDBService } from "../db/sqlite.db.service.js";
+import { normalizeUserName } from "./util/normalizeUserName.util.js";
 
 export class DeployManagerService {
   constructor(
@@ -29,8 +30,8 @@ export class DeployManagerService {
     // por ejemplo: myapp.esteban.
     // ademas, busca normalizar para ubicar el proyecto de forma consistente
     // en docker, nginx, base de datos, etc.
-    const projectName =
-      dto.subdomain.toLowerCase() + "." + user!.name.toLowerCase();
+    const normalizedUserName = normalizeUserName(user.name);
+    const projectName = dto.subdomain.toLowerCase() + "." + normalizedUserName;
 
     const deploymentState = {
       repoPath: null as string | null,
@@ -101,7 +102,8 @@ export class DeployManagerService {
     projectName: string,
     userName: string
   ) {
-    const containerName = `${projectName}.${userName}`;
+    const normalizedUserName = normalizeUserName(userName);
+    const containerName = `${projectName}.${normalizedUserName}`;
     const exists = await this.dockerService.checkIfExists(containerName);
     if (!exists) {
       throw new BadRequestException(
